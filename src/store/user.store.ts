@@ -47,13 +47,17 @@ export const useUserStore = create<UserStore>((set, get) => ({
         set({ user: response[0] });
         toast.success("User Rgistered Successfully");
         localStorage.setItem("user", JSON.stringify(response[0]));
-        if(response[0].email === process.env.NEXT_PUBLIC_ADMIN_ID){
-          set({isAdmin: true})
+        if (response[0].email === process.env.NEXT_PUBLIC_ADMIN_ID) {
+          set({ isAdmin: true });
+        } else {
+          set({ isAdmin: false });
         }
+        return true;
+      } else {
+        return false;
       }
-      return true;
     } catch (error) {
-        console.log(error);
+      console.log(error);
       toast.error("Something went wrong");
       return false;
     }
@@ -77,8 +81,8 @@ export const useUserStore = create<UserStore>((set, get) => ({
       }
       set({ user: response[0] });
       localStorage.setItem("user", JSON.stringify(response[0]));
-      if(response[0].email === process.env.NEXT_PUBLIC_ADMIN_ID){
-        set({isAdmin: true})
+      if (response[0].email === process.env.NEXT_PUBLIC_ADMIN_ID) {
+        set({ isAdmin: true });
       }
       return true;
     } catch (error) {
@@ -90,12 +94,19 @@ export const useUserStore = create<UserStore>((set, get) => ({
     try {
       const user = localStorage.getItem("user");
       if (user) {
-        set({ user: JSON.parse(user), isCheckingUser: false });
-        if(JSON.parse(user).email === process.env.NEXT_PUBLIC_ADMIN_ID){
-          set({isAdmin: true})
+        const isUserAuthenticated = await db
+          .select()
+          .from(Users)
+          .where(eq(Users.id, JSON.parse(user).id));
+        console.log(isUserAuthenticated);
+        if (isUserAuthenticated.length !== 0) {
+          set({ user: JSON.parse(user), isCheckingUser: false });
+          if (JSON.parse(user).email === process.env.NEXT_PUBLIC_ADMIN_ID) {
+            set({ isAdmin: true });
+          } else {
+            set({ isAdmin: false });
+          }
         }
-      } else {
-        set({ user: null });
       }
     } catch (error) {
       set({ user: null });

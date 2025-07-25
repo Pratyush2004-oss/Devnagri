@@ -52,7 +52,7 @@ const Signup = () => {
             <Label>Password</Label>
             <Input className="" name="password" type="password" onChange={handleChange} />
           </div>
-          <Button className="primary-button">
+          <Button className="primary-button" type="submit">
             {isLoading ? <Loader className="animate-spin" /> : "Signup"}
           </Button>
         </form>

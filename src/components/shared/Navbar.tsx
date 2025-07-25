@@ -7,9 +7,18 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { useUserStore } from "@/store/user.store";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const Navbar = () => {
   const [hidden, sethidden] = useState(true);
-  const { isAdmin } = useUserStore();
+  const { isAdmin, user, logout } = useUserStore();
   return (
     <div className="px-4 pb-2 max-w-[1800px] mx-auto border-b-2">
       <div className="flex justify-between items-center ">
@@ -20,7 +29,6 @@ const Navbar = () => {
           alt=""
           className="cursor-pointer w-28 "
         />
-        {isAdmin ? "admin " : ""}
         {/* Desktop view */}
         <div className="md:flex items-center justify-center gap-4 hidden">
           {NavData.map((item, index) => (
@@ -28,25 +36,72 @@ const Navbar = () => {
               <h3 className="hover:text-gray-400 text-white">{item.title}</h3>
             </Link>
           ))}
-          <Link href={"/login"}>
-            <Button className="primary-button w-fit">Login</Button>
-          </Link>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>My Bookings</DropdownMenuItem>
+                {isAdmin && <DropdownMenuItem>Admin Panel</DropdownMenuItem>}
+                <DropdownMenuItem
+                onClick={() => logout()}
+                >Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link href={"/login"}>
+              <Button className="primary-button w-fit">Login</Button>
+            </Link>
+          )}
         </div>
 
-        {/* Mobile View */}
-        <div className="md:hidden flex flex-col">
-          <Button
-            onClick={() => sethidden(!hidden)}
-            variant={"ghost"}
-            size={"icon"}
-            className="hover:bg-gradient-to-b from-green-300/20 to-lime-500/20"
-          >
-            {!hidden ? (
-              <X className="dark:text-white size-6" />
-            ) : (
-              <Menu className="dark:text-white size-6" />
-            )}
-          </Button>
+        {/* user Icon in mobile */}
+        <div className="flex items-center gap-5">
+          {!hidden && user && (
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuItem>My Bookings</DropdownMenuItem>
+                {isAdmin && <DropdownMenuItem>Admin Panel</DropdownMenuItem>}
+                <DropdownMenuItem>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+          {/* Mobile View */}
+          <div className="md:hidden flex flex-col">
+            <Button
+              onClick={() => sethidden(!hidden)}
+              variant={"ghost"}
+              size={"icon"}
+              className="hover:bg-gradient-to-b from-green-300/20 to-lime-500/20"
+            >
+              {!hidden ? (
+                <X className="dark:text-white size-6" />
+              ) : user ? (
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              ) : (
+                <Menu className="dark:text-white size-6" />
+              )}
+            </Button>
+          </div>
         </div>
       </div>
       <motion.div
@@ -65,11 +120,13 @@ const Navbar = () => {
             <h3 className="text-white">{item.title}</h3>
           </Link>
         ))}
-        <Link href={"/login"}>
-          <Button className="text-white w-full primary-button mt-1">
-            Login
-          </Button>
-        </Link>
+        {!user && (
+          <Link href={"/login"}>
+            <Button className="text-white w-full primary-button mt-1">
+              Login
+            </Button>
+          </Link>
+        )}
       </motion.div>
     </div>
   );
