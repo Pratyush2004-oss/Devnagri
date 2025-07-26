@@ -98,13 +98,19 @@ export const useUserStore = create<UserStore>((set, get) => ({
           .select()
           .from(Users)
           .where(eq(Users.id, JSON.parse(user).id));
-        console.log(isUserAuthenticated);
         if (isUserAuthenticated.length !== 0) {
-          set({ user: JSON.parse(user), isCheckingUser: false });
-          if (JSON.parse(user).email === process.env.NEXT_PUBLIC_ADMIN_ID) {
-            set({ isAdmin: true });
+          const matchPassword =
+            isUserAuthenticated[0].password === JSON.parse(user).password;
+          if (matchPassword) {
+            set({ user: JSON.parse(user), isCheckingUser: false });
+            if (JSON.parse(user).email === process.env.NEXT_PUBLIC_ADMIN_ID) {
+              set({ isAdmin: true });
+            } else {
+              set({ isAdmin: false });
+            }
           } else {
-            set({ isAdmin: false });
+            localStorage.removeItem("user");
+            set({ user: null, isCheckingUser: false });
           }
         }
       }

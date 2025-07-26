@@ -32,7 +32,7 @@ export const getRandomIndexedImage = (): string => {
   return IMAGES[randomIndex];
 };
 
-export const PACKAGES = [
+export const TOURS = [
   {
     __id: "1",
     name: "Rajasthan Heritage Tour",

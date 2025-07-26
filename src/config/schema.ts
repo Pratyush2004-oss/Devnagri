@@ -16,6 +16,8 @@ export const Bookings = pgTable("bookings", {
     endData:date("EndDate").notNull(),
     price:integer("Price").notNull(),
     people: integer("People").notNull(),
+    days: integer("Days").notNull(),
+    placeList:varchar("PlaceList", {length:500}),
 });
 
 export const Taxis = pgTable("taxis", {
@@ -34,3 +36,9 @@ export const TaxiBooking = {
     price:integer("Price").notNull(),
 }
 
+export const Queries = pgTable("queries", {
+    id:serial("Id").primaryKey(),
+    name:varchar("Name", {length:50}).notNull(),
+    email:varchar("Email", {length:50}).notNull(),
+    message:varchar("Message", {length:50}).notNull(),
+});

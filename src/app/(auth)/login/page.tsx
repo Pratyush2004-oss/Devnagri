@@ -34,7 +34,7 @@ const Login = () => {
   };
   return (
     <div className="flex justify-center items-center h-[calc(100vh-100px)]">
-      <div className="p-4 border-2 gradient-border rounded-lg flex flex-col min-w-1/2 items-center">
+      <div className="border-2 gradient-border flex flex-col sm:min-w-1/2 min-w-4/5 items-center">
         <div className="flex border-b-4 w-full justify-center">
           <h1>Login</h1>
         </div>
