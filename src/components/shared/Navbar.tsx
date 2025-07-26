@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { LogOut, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { useUserStore } from "@/store/user.store";
 import {
@@ -18,70 +18,22 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const Navbar = () => {
   const [hidden, sethidden] = useState(true);
-  const { isAdmin, user, logout } = useUserStore();
+  const { user } = useUserStore();
   return (
     <div className="px-4 pb-2 max-w-[1800px] mx-auto border-b-2">
-      <div className="flex justify-between items-center ">
-        <Image
-          src={"/devnagri.png"}
-          height={1000}
-          width={1000}
-          alt=""
-          className="cursor-pointer w-28 "
-        />
-        {/* Desktop view */}
-        <div className="md:flex items-center justify-center gap-4 hidden">
-          {NavData.map((item, index) => (
-            <Link key={index} href={item.url} className="dark:text-white">
-              <h3 className="hover:text-gray-400 text-white">{item.title}</h3>
-            </Link>
-          ))}
-          {user ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>My Bookings</DropdownMenuItem>
-                {isAdmin && <DropdownMenuItem>Admin Panel</DropdownMenuItem>}
-                <DropdownMenuItem
-                onClick={() => logout()}
-                >Logout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <Link href={"/login"}>
-              <Button className="primary-button w-fit">Login</Button>
-            </Link>
-          )}
-        </div>
-
+      <div className="flex justify-between items-center">
+        <Link href={"/"}>
+          <Image
+            src={"/devnagri.png"}
+            height={1000}
+            width={1000}
+            alt=""
+            className="cursor-pointer w-28"
+          />
+        </Link>
         {/* user Icon in mobile */}
         <div className="flex items-center gap-5">
-          {!hidden && user && (
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuItem>My Bookings</DropdownMenuItem>
-                {isAdmin && <DropdownMenuItem>Admin Panel</DropdownMenuItem>}
-                <DropdownMenuItem>Logout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
+          {!hidden && user && <UserDropdownIcon />}
           {/* Mobile View */}
           <div className="md:hidden flex flex-col">
             <Button
@@ -102,6 +54,21 @@ const Navbar = () => {
               )}
             </Button>
           </div>
+        </div>
+        {/* Desktop view */}
+        <div className="md:flex items-center justify-center gap-4 hidden">
+          {NavData.map((item, index) => (
+            <Link key={index} href={item.url} className="dark:text-white">
+              <h3 className="hover:text-gray-400 text-white">{item.title}</h3>
+            </Link>
+          ))}
+          {user ? (
+            <UserDropdownIcon />
+          ) : (
+            <Link href={"/login"}>
+              <Button className="primary-button w-fit">Login</Button>
+            </Link>
+          )}
         </div>
       </div>
       <motion.div
@@ -133,3 +100,31 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+const UserDropdownIcon = () => {
+  const { isAdmin, logout } = useUserStore();
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Avatar>
+          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <DropdownMenuItem>My Bookings</DropdownMenuItem>
+        {isAdmin && (
+          <DropdownMenuItem>
+            <Link href="/admin">Admin Panel</Link>
+          </DropdownMenuItem>
+        )}{" "}
+        <DropdownMenuItem onClick={() => logout()}>
+          Logout <LogOut className="ml-auto text-red-500" />
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};

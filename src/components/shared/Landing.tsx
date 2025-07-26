@@ -23,11 +23,11 @@ export function Landing() {
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
     >
-      <CarouselContent className="w-full">
+      <CarouselContent className="w-full h-full">
         {Array.from({ length: 5 }).map((_, index) => (
           <CarouselItem key={index} className="w-full">
             <div className="w-full relative">
-              {/* iamge data or landing data */}
+              {/* image data or landing data */}
               <div className="absolute inset-0 left-0 top-0 flex h-full w-full items-center justify-center">
                 <h1>Devnagri</h1>
               </div>
@@ -35,8 +35,7 @@ export function Landing() {
                 <CardContent className="flex aspect-video h-full items-center justify-center mx-auto w-full">
                   <Image
                     src={"/devnagri.png"}
-                    height={1000}
-                    width={1000}
+                    fill
                     alt="devnagri"
                     className="w-full object-contain object-center"
                   />

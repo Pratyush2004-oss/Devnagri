@@ -2,7 +2,7 @@
 import { useUserStore } from "@/store/user.store";
 import { redirect, usePathname } from "next/navigation";
 import React, { useEffect } from "react";
-import { Skeleton } from "../ui/skeleton";
+import SkeletonGroup from "./SkeletonGroup";
 
 const Redirect = ({ children }: { children: React.ReactNode }) => {
   const path = usePathname();
@@ -14,7 +14,7 @@ const Redirect = ({ children }: { children: React.ReactNode }) => {
   if (isCheckingUser)
     return (
       <div className="flex justify-center items-center h-[calc(100vh-100px)]">
-        <Skeleton className="animate-spin size-32" />
+        <SkeletonGroup/>
       </div>
     );
   if (path.includes("/login") && user) return redirect("/");

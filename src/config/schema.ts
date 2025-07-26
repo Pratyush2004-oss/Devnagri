@@ -1,4 +1,4 @@
-import { boolean, date, integer, pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
+import { date, integer, pgTable, serial, varchar } from "drizzle-orm/pg-core";
 
 export const Users = pgTable("users", {
     id:varchar("Id", {length:50}).primaryKey(),
@@ -15,6 +15,7 @@ export const Bookings = pgTable("bookings", {
     startData:date("StartDate").notNull(),
     endData:date("EndDate").notNull(),
     price:integer("Price").notNull(),
+    people: integer("People").notNull(),
 });
 
 export const Taxis = pgTable("taxis", {

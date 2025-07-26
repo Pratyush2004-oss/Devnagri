@@ -1,12 +1,13 @@
-import { Landing } from '@/components/shared/Landing'
-import React from 'react'
+import { Landing } from "@/components/shared/Landing";
+import Tours from "@/components/shared/Tours";
 
 const App = () => {
   return (
     <>
-    <Landing />
+      <Landing />
+      <Tours />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
