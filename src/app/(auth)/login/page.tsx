@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUserStore } from "@/store/user.store";
 import { Loader } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
@@ -60,6 +61,14 @@ const Login = () => {
             )}
           </Button>
         </form>
+        <div className="my-2">
+          <p className="text-sm">
+            Don&apos;t have an account?{" "}
+            <Link href="/signup" className="text-blue-500 font-semibold">
+              Signup
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

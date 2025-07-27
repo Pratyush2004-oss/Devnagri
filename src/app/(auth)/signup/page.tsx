@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUserStore } from "@/store/user.store";
 import { Loader } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
@@ -50,12 +51,25 @@ const Signup = () => {
           </div>
           <div className="relative w-full flex flex-col gap-1">
             <Label>Password</Label>
-            <Input className="" name="password" type="password" onChange={handleChange} />
+            <Input
+              className=""
+              name="password"
+              type="password"
+              onChange={handleChange}
+            />
           </div>
           <Button className="primary-button" type="submit">
             {isLoading ? <Loader className="animate-spin" /> : "Signup"}
           </Button>
         </form>
+        <div className="my-2">
+          <p className="text-sm">
+            Already have an account?{" "}
+            <Link href="/login" className="text-blue-500 font-semibold">
+              Login
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

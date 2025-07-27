@@ -4,6 +4,7 @@ import { LoginInput, SignupInput, User } from "@/types";
 import { eq } from "drizzle-orm";
 import { toast } from "sonner";
 import { create } from "zustand";
+import bcrypt from "bcryptjs";
 
 interface UserStore {
   user: User | null;
@@ -34,19 +35,26 @@ export const useUserStore = create<UserStore>((set, get) => ({
         return false;
       }
       const uid = crypto.randomUUID();
+      const hashedPassword = await bcrypt.hash(input.password, 10);
       const response = await db
         .insert(Users)
         .values({
           id: uid,
           name: input.name,
           email: input.email,
-          password: input.password,
+          password: hashedPassword,
         })
         .returning();
       if (response) {
         set({ user: response[0] });
         toast.success("User Rgistered Successfully");
-        localStorage.setItem("user", JSON.stringify(response[0]));
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            email: input.email,
+            password: input.password,
+          })
+        );
         if (response[0].email === process.env.NEXT_PUBLIC_ADMIN_ID) {
           set({ isAdmin: true });
         } else {
@@ -74,13 +82,22 @@ export const useUserStore = create<UserStore>((set, get) => ({
         return false;
       }
 
-      const isPasswordMatch = response[0].password === input.password;
+      const isPasswordMatch = await bcrypt.compare(
+        input.password,
+        response[0].password
+      );
       if (!isPasswordMatch) {
         toast.error("Invalid credentials");
         return false;
       }
       set({ user: response[0] });
-      localStorage.setItem("user", JSON.stringify(response[0]));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          email: input.email,
+          password: input.password,
+        })
+      );
       if (response[0].email === process.env.NEXT_PUBLIC_ADMIN_ID) {
         set({ isAdmin: true });
       }
@@ -97,12 +114,14 @@ export const useUserStore = create<UserStore>((set, get) => ({
         const isUserAuthenticated = await db
           .select()
           .from(Users)
-          .where(eq(Users.id, JSON.parse(user).id));
+          .where(eq(Users.email, JSON.parse(user).email));
         if (isUserAuthenticated.length !== 0) {
-          const matchPassword =
-            isUserAuthenticated[0].password === JSON.parse(user).password;
+          const matchPassword = await bcrypt.compare(
+            JSON.parse(user).password,
+            isUserAuthenticated[0].password
+          );
           if (matchPassword) {
-            set({ user: JSON.parse(user), isCheckingUser: false });
+            set({ user: isUserAuthenticated[0], isCheckingUser: false });
             if (JSON.parse(user).email === process.env.NEXT_PUBLIC_ADMIN_ID) {
               set({ isAdmin: true });
             } else {

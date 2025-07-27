@@ -1,7 +1,7 @@
 "use client";
 import { NavData } from "@/constants/navdata";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { LogOut, Menu, X } from "lucide-react";
@@ -16,9 +16,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { usePathname } from "next/navigation";
 const Navbar = () => {
   const [hidden, sethidden] = useState(true);
+  const path = usePathname();
   const { user } = useUserStore();
+
+  useEffect(() => {
+    sethidden(true);
+  }, [path]);
+
   return (
     <div className="px-4 pb-2 max-w-[1800px] mx-auto border-b-2">
       <div className="flex justify-between items-center">

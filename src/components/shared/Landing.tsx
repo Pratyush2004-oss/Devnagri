@@ -35,7 +35,9 @@ export function Landing() {
                 <CardContent className="flex aspect-video h-full items-center justify-center mx-auto w-full">
                   <Image
                     src={"/devnagri.png"}
-                    fill
+                    height={1000}
+                    width={1000}
+                    priority
                     alt="devnagri"
                     className="w-full object-contain object-center"
                   />

@@ -4,7 +4,7 @@ export const Users = pgTable("users", {
     id:varchar("Id", {length:50}).primaryKey(),
     name:varchar("Name", {length:50}).notNull(),
     email:varchar("Email", {length:50}).notNull(),
-    password:varchar("Password", {length:50}).notNull(),
+    password:varchar("Password", {length:150}).notNull(),
 });
 
 export const Bookings = pgTable("bookings", {
