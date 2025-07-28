@@ -57,6 +57,14 @@ function BookingCard({ props }: { props: Props }) {
 
   const handleBooking = async () => {
     setloading(true);
+    try {
+      
+    } catch (error) {
+      
+    }
+    finally{
+      setloading(false);
+    }
   };
 
   return (
@@ -65,9 +73,9 @@ function BookingCard({ props }: { props: Props }) {
         <h1 className="text-lg font-bold text-center font-serif my-2">
           {props.PackageName}
         </h1>
-        <h3 className="text-lg mb-5 font-bold text-center font-serif border-b-2 my-2">
+        <h4 className="text-xl mb-5 font-bold text-center font-serif border-b-2 my-2">
           {input.PackageDays} {input.PackageDays > 1 ? "days " : "day "}
-        </h3>
+        </h4>
         <div className="flex flex-col gap-6 mt-5">
           {/* Number of people */}
           <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-6 items-center">
@@ -76,7 +84,7 @@ function BookingCard({ props }: { props: Props }) {
             </Label>
             <div className="flex items-center gap-5 justify-center">
               <Button
-                disabled={input.people <= 1}
+                disabled={input.people <= 2}
                 size={"icon"}
                 variant={"ghost"}
                 className="cursor-pointer"
