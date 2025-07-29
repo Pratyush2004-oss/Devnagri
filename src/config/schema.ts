@@ -1,5 +1,13 @@
-import { date, integer, pgTable, serial, varchar } from "drizzle-orm/pg-core";
+import {
+  date,
+  integer,
+  pgTable,
+  serial,
+  varchar,
+  pgEnum,
+} from "drizzle-orm/pg-core";
 
+export const bookignStatusEnum = pgEnum("booking_status", ["pending", "approved", "rejected"]);
 export const Users = pgTable("users", {
   id: varchar("Id", { length: 50 }).primaryKey(),
   name: varchar("Name", { length: 50 }).notNull(),
@@ -17,6 +25,7 @@ export const Bookings = pgTable("bookings", {
   people: integer("People").notNull(),
   days: integer("Days").notNull(),
   placeList: varchar("PlaceList", { length: 500 }),
+  status: bookignStatusEnum("Status").notNull().default("pending"),
 });
 
 export const Taxis = pgTable("taxis", {
@@ -37,6 +46,7 @@ export const TaxiBooking = pgTable("taxi_bookings", {
   destination: varchar("Destination", { length: 50 }).notNull(),
   date: date("Date").notNull(),
   bookingDate: date("BookingDate").notNull(),
+  status: bookignStatusEnum("Status").notNull().default("pending"),
 });
 
 export const Queries = pgTable("queries", {

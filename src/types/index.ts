@@ -20,11 +20,12 @@ export type BookingType = {
   name: string | null;
   user: User | null;
   date: Date | string | null;
-  startData: Date | string | null;
+  startDate: Date | string | null;
   price: number | null;
   people: number | null;
   days: number | null;
   placeList: string | null;
+  status: string | null;
 };
 
 export type TaxiBookingsTypes = {
@@ -35,6 +36,8 @@ export type TaxiBookingsTypes = {
   source: string | null;
   destination: string | null;
   date: Date | string | null;
+  bookingDate: Date | string | null;
+  status: string | null;
 };
 
 export type TaxiTypes = {

@@ -152,7 +152,7 @@ h3 {
 }
 
 h5 {
-    @apply max-sm:text-lg font-mono font-extrabold text-2xl text-gradient leading-tight from-gray-500 via-gray-700 to-slate-500 xl:tracking-[-2px];
+    @apply max-md:text-lg font-mono font-extrabold text-2xl text-gradient leading-tight from-gray-500 via-gray-700 to-slate-500 xl:tracking-[-2px];
 }
 
 
