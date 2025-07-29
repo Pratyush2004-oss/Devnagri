@@ -16,16 +16,41 @@ export type LoginInput = {
 };
 
 export type BookingType = {
+  id: number | null;
+  name: string | null;
+  user: User | null;
+  date: Date | string | null;
+  startData: Date | string | null;
+  price: number | null;
+  people: number | null;
+  days: number | null;
+  placeList: string | null;
+};
+
+export type TaxiBookingsTypes = {
+  id: number | null;
+  user: User | null;
+  taxi: TaxiTypes | null;
+  price: number | null;
+  source: string | null;
+  destination: string | null;
+  date: Date | string | null;
+};
+
+export type TaxiTypes = {
+  id: string | null;
+  model: string | null;
+  seats: number | null;
+  vehicleNumber: string | null;
+  driver: string | null;
+  driverPhoneNumber: string | null;
+};
+
+export type QueriesTypes = {
   id: number;
   name: string;
-  user: User;
-  date: Date;
-  startData: Date;
-  endData: Date;
-  price: number;
-  people: number;
-  days: number;
-  placeList?: string;
+  email: string;
+  message: string;
 };
 
 export type Itinerary = {

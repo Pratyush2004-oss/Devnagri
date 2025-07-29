@@ -145,10 +145,14 @@ h1 {
 }
 
 h2 {
-  @apply max-sm:text-xl text-3xl text-dark-200;
+  @apply max-sm:text-xl text-3xl text-gradient leading-tight from-gray-500 via-gray-700 to-slate-500 xl:tracking-[-2px];
 }
 h3 {
   @apply text-lg font-medium text-dark-200 hover:text-red-500 transition-colors duration-300;
+}
+
+h5 {
+    @apply max-sm:text-lg font-mono font-extrabold text-2xl text-gradient leading-tight from-gray-500 via-gray-700 to-slate-500 xl:tracking-[-2px];
 }
 
 
@@ -272,5 +276,9 @@ form {
 }
 * {
   scrollbar-width: thin;
+  scrollbar-color: #8e98ff #f0f4ff;
+}
+.details-container{
+  scrollbar-width: none;
   scrollbar-color: #8e98ff #f0f4ff;
 }

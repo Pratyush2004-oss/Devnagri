@@ -27,7 +27,7 @@ export function TourCard({ tour }: { tour: TourType }) {
           // You can define these variants outside or inline
           variants={{
             hidden: { opacity: 0, top: "100%" },
-            visible: { opacity: 1, top: 0},
+            visible: { opacity: 1, top: 0 },
           }}
           initial="hidden" // Start with the hidden state
           whileHover="visible" // Animate to the visible state on hover
@@ -52,7 +52,11 @@ export function TourCard({ tour }: { tour: TourType }) {
               </span>
             </div>
             <div className="flex items-center gap-1 mt-2">
-              <Button variant={"outline"} size={"sm"} className="bg-red-500">
+              <Button
+                variant={"outline"}
+                size={"sm"}
+                className="bg-gradient-to-r from-red-300 to-red-600 hover:from-red-600 hover:to-red-300 hover:text-white"
+              >
                 Enquire Now
               </Button>
               <Button
