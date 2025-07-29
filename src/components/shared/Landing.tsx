@@ -10,6 +10,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import Image from "next/image";
+import SearchTaxi from "./SearchTaxi";
 
 export function Landing() {
   const plugin = React.useRef(
@@ -28,8 +29,11 @@ export function Landing() {
           <CarouselItem key={index} className="w-full">
             <div className="w-full relative">
               {/* image data or landing data */}
-              <div className="absolute inset-0 left-0 top-0 flex h-full w-full items-center justify-center">
-                <h1>Devnagri</h1>
+              <div className="absolute inset-6 left-0 top-0 grid md:grid-cols-3 px-20 h-full w-full items-center justify-center z-10 gap-10 flex-wrap gradient-border">
+                <div></div>
+                <div className="col-span-2">
+                  <SearchTaxi />
+                </div>
               </div>
               <Card className="w-full p-0">
                 <CardContent className="flex aspect-video h-full items-center justify-center mx-auto w-full">
