@@ -5,18 +5,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import useBookingHook from "@/hooks/booking.hooks";
 import { cn } from "@/lib/utils";
+import { useUserStore } from "@/store/user.store";
+import { BookingInput } from "@/types";
 import { CalendarIcon, Loader2, MinusCircle, PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
-import { useUserStore } from "@/store/user.store";
-import { db } from "@/config";
-import { Bookings } from "@/config/schema";
-import { BookingInput } from "@/types";
-import useBookingHook from "@/hooks/booking.hooks";
 
 interface Props {
   PackageName: string;
