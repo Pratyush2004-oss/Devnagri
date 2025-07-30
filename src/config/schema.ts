@@ -25,7 +25,7 @@ export const Bookings = pgTable("bookings", {
   people: integer("People").notNull(),
   days: integer("Days").notNull(),
   placeList: varchar("PlaceList", { length: 500 }),
-  status: bookignStatusEnum("Status").notNull().default("pending"),
+  status: bookignStatusEnum("Status").default("pending"),
 });
 
 export const Taxis = pgTable("taxis", {
@@ -46,7 +46,7 @@ export const TaxiBooking = pgTable("taxi_bookings", {
   destination: varchar("Destination", { length: 50 }).notNull(),
   date: date("Date").notNull(),
   bookingDate: date("BookingDate").notNull(),
-  status: bookignStatusEnum("Status").notNull().default("pending"),
+  status: bookignStatusEnum("Status").default("pending"),
 });
 
 export const Queries = pgTable("queries", {

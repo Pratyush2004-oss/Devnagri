@@ -1,5 +1,6 @@
 import { db } from "@/config";
 import { Bookings, Queries, TaxiBooking, Taxis, Users } from "@/config/schema";
+import { TaxiInputType, TaxiTypes } from "@/types";
 import { desc, eq } from "drizzle-orm";
 import { toast } from "sonner";
 
@@ -89,6 +90,35 @@ const useAdminHook = () => {
     return { users, taxiBookings, queries, taxis, bookings };
   };
   //   add taxi-information
+  const addTaxiInformation = async (input: TaxiInputType) => {
+    if (
+      !input.driver ||
+      !input.driverPhoneNumber ||
+      !input.id ||
+      !input.model ||
+      !input.seats ||
+      !input.vehicleNumber
+    ) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+    if (
+      input.driverPhoneNumber.length !== 10 ||
+      /^\d+$/.test(input.driverPhoneNumber) === false
+    ) {
+      toast.error("Please enter a valid phone number");
+      return;
+    }
+    try {
+      const response = await db.insert(Taxis).values(input).returning();
+      if (response) {
+        toast.success("Taxi added successfully");
+      }
+      return response;
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+  };
 
   // verify Booking
   const verifyBooking = async (
@@ -129,6 +159,7 @@ const useAdminHook = () => {
     fetchQueries,
     fetchDetails,
     verifyBooking,
+    addTaxiInformation,
   };
 };
 

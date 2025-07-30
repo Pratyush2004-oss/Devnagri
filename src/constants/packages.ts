@@ -1368,7 +1368,7 @@ export const TOURS = [
   },
   {
     __id: "5",
-    name: "Cultural and Colorful Tour of Rajasthan, Delhi and Agra",
+    name: "Cultural and Colorful Tour of Rajasthan Delhi and Agra",
     image: getRandomIndexedImage(),
     days: 30,
     nights: 29,

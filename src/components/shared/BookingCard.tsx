@@ -15,6 +15,8 @@ import { Label } from "../ui/label";
 import { useUserStore } from "@/store/user.store";
 import { db } from "@/config";
 import { Bookings } from "@/config/schema";
+import { BookingInput } from "@/types";
+import useBookingHook from "@/hooks/booking.hooks";
 
 interface Props {
   PackageName: string;
@@ -23,17 +25,6 @@ interface Props {
   PlaceList?: string[];
   AdventureList?: string[];
 }
-
-type BookingInput = {
-  PackageName: string;
-  PackageDays: number;
-  PackagePrice: number;
-  people: number;
-  startDate: Date;
-  PlaceList?: string[];
-  hotel?: string;
-  AdventureList?: string[];
-};
 
 function BookingCard({ props }: { props: Props }) {
   const { user } = useUserStore();
@@ -56,42 +47,14 @@ function BookingCard({ props }: { props: Props }) {
       PackagePrice: input.people * input.PackageDays * props.PackagePrice,
     });
   }, [input.PackageDays, input.people]);
+  const { bookTour } = useBookingHook();
 
+  // handle booking controller
   const handleBooking = async () => {
     setloading(true);
     try {
-      // checking all things are not null
-      if (
-        !input.PackageName ||
-        !input.PackageDays ||
-        !input.PackagePrice ||
-        !input.people ||
-        !input.startDate
-      ) {
-        toast.error("All fields are required");
-        return;
-      }
-
-      const response = await db
-        .insert(Bookings)
-        .values({
-          user: user?.id,
-          bookingDate: new Date(),
-          startDate: input.startDate,
-          name: input.PackageName,
-          price: input.PackagePrice,
-          people: input.people,
-          days: input.PackageDays,
-          placeList: input.PlaceList
-        } as any)
-        .returning();
-
-      if (response) {
-        toast.success("Booking Successfull....");
-        router.push("/bookings");
-      }
+      await bookTour(input);
     } catch (error) {
-      toast.error("Something went wrong");
     } finally {
       setloading(false);
     }

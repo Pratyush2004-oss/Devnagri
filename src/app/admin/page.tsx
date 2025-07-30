@@ -20,6 +20,7 @@ import BookingTable from "./_components/BookingTable";
 import Details from "./_components/Details";
 import QueriesTable from "./_components/QueriesTable";
 import TaxiBookingTable from "./_components/TaxiBookingTable";
+import AddTaxiInformation from "./_components/AddTaxiInformation";
 const AdminPanel = () => {
   const { isAdmin } = useUserStore();
 
@@ -41,6 +42,7 @@ const AdminPanel = () => {
   return (
     <div className="px-3 mx-auto flex flex-col items-center min-h-[calc(100vh-4rem)] w-full">
       <Details />
+      <AddTaxiInformation />
       <Tabs defaultValue="Bookings" className="w-full mt-5">
         <TabsList className="mx-auto">
           <TabsTrigger value={"Bookings"}>

@@ -29,10 +29,18 @@ export function Landing() {
           <CarouselItem key={index} className="w-full">
             <div className="w-full relative">
               {/* image data or landing data */}
-              <div className="absolute inset-6 left-0 top-0 grid md:grid-cols-3 px-20 h-full w-full items-center justify-center z-10 gap-10 flex-wrap gradient-border">
-                <div></div>
-                <div className="col-span-2">
-                  <SearchTaxi />
+              <div className="absolute inset-0 left-0 top-0 h-full w-full z-10 gap-10 flex-wrap gradient-border">
+                <h4>BEST TRAVEL EXPERIENCES IN UTTARAKHAND</h4>
+                <div className="grid lg:grid-cols-3 gap-20 w-full h-full items-center">
+                  <div className="flex flex-col gap-2">
+                    <h1>
+                      Travel, explore and enjoy the beauty of
+                      <span className="text-primary"> Uttarakhand</span>
+                    </h1>
+                  </div>
+                  <div className="col-span-2">
+                    <SearchTaxi />
+                  </div>
                 </div>
               </div>
               <Card className="w-full p-0">

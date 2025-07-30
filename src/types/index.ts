@@ -49,6 +49,15 @@ export type TaxiTypes = {
   driverPhoneNumber: string | null;
 };
 
+export type TaxiInputType = {
+  id: string;
+  model: string;
+  seats: number;
+  vehicleNumber: string;
+  driver: string;
+  driverPhoneNumber: string;
+};
+
 export type QueriesTypes = {
   id: number;
   name: string;
@@ -74,4 +83,23 @@ export type TourType = {
   Itinerary: Itinerary[] | undefined;
   FAQs: Itinerary[] | undefined;
   Price?: number;
+};
+
+export type BookingInput = {
+  PackageName: string;
+  PackageDays: number;
+  PackagePrice: number;
+  people: number;
+  startDate: Date;
+  PlaceList?: string[];
+  hotel?: string;
+  AdventureList?: string[];
+};
+
+export type TaxiBookingInput = {
+  taxi: string;
+  source: string;
+  destination: string;
+  date: Date;
+  price: number;
 };

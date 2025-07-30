@@ -34,7 +34,7 @@ const SearchTaxi = () => {
             onValueChange={(value) => setinput({ ...input, from: value })}
           >
             <SelectTrigger className="w-full bg-white">
-              <SelectValue placeholder="Select Source Location" />
+              <SelectValue placeholder="Select Pickup Location" />
             </SelectTrigger>
             <SelectContent className="gradient-border">
               {cities.map((city, index) => (
@@ -50,7 +50,7 @@ const SearchTaxi = () => {
           <Select>
             <SelectTrigger className="w-full bg-white">
               <SelectValue
-                placeholder="Select Destination Location"
+                placeholder="Select Dropoff Location"
                 className="placeholder:text-white text-white"
               />
             </SelectTrigger>
