@@ -1,17 +1,20 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Tourbookings from "./_components/Tourbookings";
+import TaxiBookings from "./_components/TaxiBookings";
 const Bookings = () => {
   return (
-    <Tabs defaultValue="account" className="w-[400px]">
+    <Tabs defaultValue="tourBookings" className="w-full">
       <TabsList className="mx-auto my-3">
-        <TabsTrigger value="account">Account</TabsTrigger>
-        <TabsTrigger value="password">Password</TabsTrigger>
+        <TabsTrigger value="tourBookings">Tour Bookings</TabsTrigger>
+        <TabsTrigger value="taxiBookings">Taxi Bookings</TabsTrigger>
       </TabsList>
-      <TabsContent value="account">
+      <TabsContent value="tourBookings">
         <Tourbookings />
       </TabsContent>
-      <TabsContent value="password">Change your password here.</TabsContent>
+      <TabsContent value="taxiBookings">
+        <TaxiBookings />
+      </TabsContent>
     </Tabs>
   );
 };

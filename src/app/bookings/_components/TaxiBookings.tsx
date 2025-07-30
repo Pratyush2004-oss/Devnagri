@@ -1,3 +1,4 @@
+"use client";
 import useBookingHook from "@/hooks/booking.hooks";
 import { TaxiBookingsTypes } from "@/types";
 import React, { useEffect, useState } from "react";
@@ -7,8 +8,8 @@ const TaxiBookings = () => {
   const [bookings, setBookings] = useState<TaxiBookingsTypes[]>([]);
   useEffect(() => {
     const fetchBookingsAsync = async () => {
-      const fetchedTourBookings = await getAllTaxiBookings();
-      if("error" in fetchedTourBookings) return
+      const fetchedTaxiBookings = await getAllTaxiBookings();
+      if ("error" in fetchedTaxiBookings) return;
       setBookings(bookings);
     };
     fetchBookingsAsync();

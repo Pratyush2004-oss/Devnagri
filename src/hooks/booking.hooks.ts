@@ -104,7 +104,6 @@ const useBookingHook = () => {
         .fullJoin(Users, eq(Users.id, Bookings.user))
         .where(eq(Bookings.user, user.id))
         .orderBy(desc(Bookings.id));
-      console.log(fetchedBookings);
       return fetchedBookings;
     } catch (error) {
       return { error: "Something went wrong" };
