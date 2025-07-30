@@ -18,7 +18,7 @@ export const Users = pgTable("users", {
 export const Bookings = pgTable("bookings", {
   id: serial("Id").primaryKey(),
   name: varchar("Name", { length: 50 }).notNull(),
-  user: varchar().references(() => Users.id),
+  user: varchar().notNull().references(() => Users.id),
   bookingDate: date("Date").notNull(),
   startDate: date("StartDate").notNull(),
   price: integer("Price").notNull(),
@@ -39,8 +39,8 @@ export const Taxis = pgTable("taxis", {
 
 export const TaxiBooking = pgTable("taxi_bookings", {
   id: serial("Id").primaryKey(),
-  user: varchar().references(() => Users.id),
-  taxi: varchar().references(() => Taxis.id),
+  user: varchar().notNull().references(() => Users.id),
+  taxi: varchar().notNull().references(() => Taxis.id),
   price: integer("Price").notNull(),
   source: varchar("Source", { length: 50 }).notNull(),
   destination: varchar("Destination", { length: 50 }).notNull(),

@@ -1,9 +1,19 @@
-import React from 'react'
-
+import React from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Tourbookings from "./_components/Tourbookings";
 const Bookings = () => {
   return (
-    <div>Bookings</div>
-  )
-}
+    <Tabs defaultValue="account" className="w-[400px]">
+      <TabsList className="mx-auto my-3">
+        <TabsTrigger value="account">Account</TabsTrigger>
+        <TabsTrigger value="password">Password</TabsTrigger>
+      </TabsList>
+      <TabsContent value="account">
+        <Tourbookings />
+      </TabsContent>
+      <TabsContent value="password">Change your password here.</TabsContent>
+    </Tabs>
+  );
+};
 
-export default Bookings
+export default Bookings;

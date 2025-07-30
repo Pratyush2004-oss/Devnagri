@@ -120,6 +120,12 @@ const useAdminHook = () => {
     }
   };
 
+  // fetch all taxis
+  const fetchTaxis = async () => {
+    const response = await db.select().from(Taxis).orderBy(desc(Taxis.id));
+    return response;
+  };
+
   // verify Booking
   const verifyBooking = async (
     id: number,
@@ -160,6 +166,7 @@ const useAdminHook = () => {
     fetchDetails,
     verifyBooking,
     addTaxiInformation,
+    fetchTaxis,
   };
 };
 

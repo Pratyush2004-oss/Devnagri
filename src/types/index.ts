@@ -25,7 +25,7 @@ export type BookingType = {
   people: number | null;
   days: number | null;
   placeList: string | null;
-  status: string | null;
+  status: "pending" | "approved" | "rejected" | null;
 };
 
 export type TaxiBookingsTypes = {
@@ -37,7 +37,7 @@ export type TaxiBookingsTypes = {
   destination: string | null;
   date: Date | string | null;
   bookingDate: Date | string | null;
-  status: string | null;
+  status: "pending" | "approved" | "rejected" | null;
 };
 
 export type TaxiTypes = {
