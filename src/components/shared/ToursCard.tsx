@@ -11,7 +11,7 @@ import { Button } from "../ui/button";
 export function TourCard({ tour }: { tour: TourType }) {
   const router = useRouter();
   return (
-    <Card className="relative w-full aspect-[4/3] md:aspect-[3/2] lg:aspect-[4/3] overflow-hidden rounded-lg shadow-lg group">
+    <Card className="relative max-sm:w-[90%] max-sm:aspect-[4/3] w-full mx-auto aspect-[4/5] overflow-hidden rounded-lg shadow-lg group">
       <CardContent>
         {/* Background Image Container */}
         <Image

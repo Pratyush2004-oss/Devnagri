@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -17,7 +18,7 @@ function BookedTourCard({ pack }: { pack: BookingType; lineclamp?: boolean }) {
           alt={pack.name ?? ""}
           width={500}
           height={500}
-          className="w-full h-56 md:h-72 object-cover rounded-br-xl rounded-tr-2xl shadow-lg"
+          className="w-full h-56 md:h-72 object-cover rounded-br-xl rounded-tr-2xl shadow-lg rounded-bl-xl"
         />
       </CardHeader>
       <CardContent className="mt-auto flex flex-col">
@@ -33,15 +34,32 @@ function BookedTourCard({ pack }: { pack: BookingType; lineclamp?: boolean }) {
               {(pack.startDate as string) ?? ""}
             </span>
           </p>
-          <p className="text-center">Days: {pack.days}</p>
-          <p className=" font-semibold text-center">Price: ₹ {pack.price}</p>
+          <p className="text-center">
+            Days: <span>{pack.days}</span>
+          </p>
+          <p className=" font-semibold text-center">
+            Price: <span className="font-bold">₹ {pack.price}</span>
+          </p>
           <p className=" font-semibold text-center">People: {pack.people}</p>
           {(pack.placeList ?? []).length > 0 && (
-            <p className=" font-semibold col-span-2 text-center">
-              Places: {pack.placeList ?? ""}
+            <p className="font-semibold col-span-2 text-center">
+              Places: <span className="font-bold">{pack.placeList ?? ""}</span>
             </p>
           )}
-          <span className="">{pack.status}</span>
+          <div className="col-span-2 flex items-center justify-center gap-4">
+            <span>Status: </span>
+            <Badge
+              className={`${
+                pack.status && pack.status === "approved"
+                  ? "bg-green-500"
+                  : pack.status === "rejected"
+                  ? "bg-red-500"
+                  : "bg-yellow-500"
+              } text-sm font-semibold text-white shadow-md`}
+            >
+              {pack.status?.toUpperCase()}
+            </Badge>
+          </div>
         </CardDescription>
       </CardContent>
     </Card>

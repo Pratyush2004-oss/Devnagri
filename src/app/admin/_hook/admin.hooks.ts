@@ -1,7 +1,7 @@
 import { db } from "@/config";
 import { Bookings, Queries, TaxiBooking, Taxis, Users } from "@/config/schema";
-import { TaxiInputType, TaxiTypes } from "@/types";
-import { desc, eq } from "drizzle-orm";
+import { TaxiInputType } from "@/types";
+import { desc, eq, isNotNull } from "drizzle-orm";
 import { toast } from "sonner";
 
 const useAdminHook = () => {
@@ -59,6 +59,7 @@ const useAdminHook = () => {
       .from(TaxiBooking)
       .rightJoin(Users, eq(Users.id, TaxiBooking.user))
       .rightJoin(Taxis, eq(Taxis.id, TaxiBooking.taxi))
+      .where(isNotNull(TaxiBooking.id))
       .limit(10)
       .offset(offset - 1)
       .orderBy(desc(TaxiBooking.id));

@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -8,26 +14,33 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
+import { routesByCity } from "@/constants/taxi-tours";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
-import { cities } from "@/constants/Cities";
-const SearchTaxi = () => {
+import { useState } from "react";
+const SearchTaxi = ({
+  setTaxiList,
+}: {
+  setTaxiList: React.Dispatch<React.SetStateAction<typeof routesByCity>>;
+}) => {
   const [input, setinput] = useState({
     from: "",
     to: "",
     date: new Date(),
   });
+
+  // Search Taxi
+  const searchTaxi = () => {
+    if (!input.from || !input.to || !input.date) return;
+    const filteredRoutes = routesByCity.filter((route) => {
+      return route.cityName.toLowerCase() === input.from.toLowerCase();
+    });
+    setTaxiList(filteredRoutes);
+  };
   return (
     <div className="gradient-div">
       <h5 className="text-center my-4">Search for a Taxi</h5>
-      <div className="grid grid-cols-2 gap-4 ">
+      <div className="grid md:grid-cols-2 gap-4 ">
         <div className="flex flex-col gap-2">
           <Label>From</Label>
           <Select
@@ -37,9 +50,9 @@ const SearchTaxi = () => {
               <SelectValue placeholder="Select Pickup Location" />
             </SelectTrigger>
             <SelectContent className="gradient-border">
-              {cities.map((city, index) => (
-                <SelectItem key={index} value={city}>
-                  {city}
+              {routesByCity.map((city, index) => (
+                <SelectItem key={index} value={city.cityName}>
+                  {city.cityName}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -47,7 +60,10 @@ const SearchTaxi = () => {
         </div>
         <div className="flex flex-col gap-2">
           <Label>To</Label>
-          <Select>
+          <Select
+            defaultValue=""
+            onValueChange={(value) => setinput({ ...input, to: value })}
+          >
             <SelectTrigger className="w-full bg-white">
               <SelectValue
                 placeholder="Select Dropoff Location"
@@ -55,13 +71,14 @@ const SearchTaxi = () => {
               />
             </SelectTrigger>
             <SelectContent className="gradient-border">
-              {cities
-                .filter((city) => city !== input.from)
-                .map((city, index) => (
-                  <SelectItem key={index} value={city}>
-                    {city}
-                  </SelectItem>
-                ))}
+              {input.from &&
+                routesByCity
+                  .filter((city) => city.cityName === input.from)[0]
+                  .routes.map((route, index) => (
+                    <SelectItem key={index} value={route.to}>
+                      {route.to}
+                    </SelectItem>
+                  ))}
             </SelectContent>
           </Select>{" "}
         </div>
@@ -102,8 +119,12 @@ const SearchTaxi = () => {
           </Popover>
         </div>
         <div className="flex flex-col gap-2">
-          <Label>Time</Label>
-          <Input type="time" />
+          <Button
+            className="w-full primary-button mt-auto"
+            onClick={searchTaxi}
+          >
+            Search
+          </Button>
         </div>
       </div>
     </div>

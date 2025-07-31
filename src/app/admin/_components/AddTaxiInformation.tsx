@@ -73,7 +73,7 @@ const AddTaxiInformation = () => {
                 setinput({
                   ...input,
                   vehicleNumber: e.target.value,
-                  id: e.target.value.replace(" ", "_"),
+                  id: e.target.value.replaceAll(" ", "_"),
                 });
               }}
             />
