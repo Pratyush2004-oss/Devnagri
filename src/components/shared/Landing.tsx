@@ -10,7 +10,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import SearchTaxi from "./SearchTaxi";
+import SearchTaxi from "../../app/taxi-services/_components/SearchTaxi";
 
 export function Landing() {
   const plugin = React.useRef(

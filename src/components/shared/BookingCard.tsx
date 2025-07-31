@@ -35,6 +35,7 @@ function BookingCard({ props }: { props: Props }) {
     AdventureList: props.AdventureList,
   });
   const [loading, setloading] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const router = useRouter();
 
   // change package price
@@ -146,7 +147,7 @@ function BookingCard({ props }: { props: Props }) {
             <Label className="text-xl font-bold sm:justify-center">
               Start Date
             </Label>
-            <Popover>
+            <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
               <PopoverTrigger asChild>
                 <Button
                   variant={"outline"}
@@ -172,9 +173,14 @@ function BookingCard({ props }: { props: Props }) {
                   mode="single"
                   selected={input.startDate}
                   initialFocus
-                  disabled={(date) => date < new Date()}
+                  disabled={(date) =>
+                    date < new Date(new Date().setHours(0, 0, 0, 0))
+                  }
                   onSelect={(date) => {
-                    date && setInput({ ...input, startDate: new Date(date) });
+                    if (date) {
+                      setInput({ ...input, startDate: new Date(date) });
+                      setIsCalendarOpen(false);
+                    }
                   }}
                 />
               </PopoverContent>

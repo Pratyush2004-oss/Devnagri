@@ -1,6 +1,6 @@
 "use client";
-import SearchTaxi from "@/components/shared/SearchTaxi";
-import TaxiList from "@/components/shared/TaxiList";
+import SearchTaxi from "@/app/taxi-services/_components/SearchTaxi";
+import TaxiList from "@/app/taxi-services/_components/TaxiList";
 import { routesByCity } from "@/constants/taxi-tours";
 import { useState } from "react";
 

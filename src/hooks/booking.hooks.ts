@@ -2,7 +2,7 @@ import { db } from "@/config";
 import { Bookings, TaxiBooking, Taxis, Users } from "@/config/schema";
 import { useUserStore } from "@/store/user.store";
 import { BookingInput, TaxiBookingInput } from "@/types";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, ne, notInArray } from "drizzle-orm";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -63,7 +63,7 @@ const useBookingHook = () => {
         .insert(TaxiBooking)
         .values({
           bookingDate: input.date,
-          date: Date.now(),
+          date: new Date(),
           source: input.source,
           destination: input.destination,
           taxi: input.taxi,
@@ -77,6 +77,7 @@ const useBookingHook = () => {
         router.push("/bookings");
       }
     } catch (error) {
+      console.log(error)
       toast.error("Something went wrong");
     }
   };
@@ -145,8 +146,46 @@ const useBookingHook = () => {
       return { error: "Something went wrong" };
     }
   };
+  // get all taxis available for the given Date
+  const getAllTaxis = async (date: string) => {
+    try {
+      if (!user) return { error: "User not found" };
+      const bookedTaxisSubquery = await db
+        .select({
+          taxiId: TaxiBooking.taxi,
+        })
+        .from(TaxiBooking)
+        .where(eq(TaxiBooking.bookingDate, date));
 
-  return { bookTour, bookTaxi, getAllTourBookings, getAllTaxiBookings };
+      const availableTaxis = await db
+        .select({
+          id: Taxis.id,
+          model: Taxis.model,
+          seats: Taxis.seats,
+          vehicleNumber: Taxis.vehicleNumber,
+          driver: Taxis.driver,
+          driverPhoneNumber: Taxis.driverPhoneNumber,
+        })
+        .from(Taxis)
+        .where(
+          notInArray(
+            Taxis.id,
+            bookedTaxisSubquery.map((item) => item.taxiId)
+          )
+        );
+      return availableTaxis;
+    } catch (error) {
+      return { error: "Something went wrong" };
+    }
+  };
+
+  return {
+    bookTour,
+    bookTaxi,
+    getAllTourBookings,
+    getAllTaxiBookings,
+    getAllTaxis,
+  };
 };
 
 export default useBookingHook;
