@@ -7,7 +7,7 @@ import { useState } from "react";
 const TaxiServices = () => {
   const [taxiList, setTaxiList] = useState(routesByCity);
   return (
-    <div className="p-4"> 
+    <div className="p-4">
       <div className="flex justify-center">
         <h1 className="">Book a Taxi</h1>
       </div>

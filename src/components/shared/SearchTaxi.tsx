@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Popover,
@@ -21,7 +20,7 @@ import { useState } from "react";
 const SearchTaxi = ({
   setTaxiList,
 }: {
-  setTaxiList: React.Dispatch<React.SetStateAction<typeof routesByCity>>;
+  setTaxiList?: React.Dispatch<React.SetStateAction<typeof routesByCity>>;
 }) => {
   const [input, setinput] = useState({
     from: "",
@@ -32,15 +31,24 @@ const SearchTaxi = ({
   // Search Taxi
   const searchTaxi = () => {
     if (!input.from || !input.to || !input.date) return;
-    const filteredRoutes = routesByCity.filter((route) => {
-      return route.cityName.toLowerCase() === input.from.toLowerCase();
+    const filteredCity = routesByCity.filter((city) => {
+      return city.cityName === input.from;
     });
-    setTaxiList(filteredRoutes);
+    const filteredRoutes = filteredCity[0].routes.filter((route) => {
+      return route.to === input.to;
+    });
+    const filteredData = [
+      {
+        cityName: filteredCity[0].cityName,
+        routes: filteredRoutes,
+      },
+    ];
+    setTaxiList?.(filteredData);
   };
   return (
     <div className="gradient-div">
       <h5 className="text-center my-4">Search for a Taxi</h5>
-      <div className="grid md:grid-cols-2 gap-4 ">
+      <div className="grid sm:grid-cols-2 gap-4 ">
         <div className="flex flex-col gap-2">
           <Label>From</Label>
           <Select

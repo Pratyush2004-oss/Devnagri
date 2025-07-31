@@ -9,7 +9,7 @@ const TaxiList = ({ taxiList }: { taxiList: typeof routesByCity }) => {
         <h1 className="text-2xl font-bold">Taxi List</h1>
       </div>
       <div className="flex flex-col gap-4">
-        {taxiList.map((item, index) => (
+        {taxiList.length > 0 ? taxiList.map((item, index) => (
           <div
             className="flex flex-col gap-4 w-[90%] md:max-w-[85%] xl:max-w-[75%] mx-auto"
             key={index}
@@ -59,7 +59,11 @@ const TaxiList = ({ taxiList }: { taxiList: typeof routesByCity }) => {
               ))}
             </div>
           </div>
-        ))}
+        )) : (
+          <div className="flex items-center justify-center mt-5">
+            <h2 className="text-2xl font-bold">No Taxi Found</h2>
+          </div>
+        )}
       </div>
     </div>
   );
