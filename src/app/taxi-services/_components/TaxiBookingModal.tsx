@@ -39,11 +39,13 @@ const TaxiBookingModal = ({
     taxi: "",
   });
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [showList, setShowList] = useState(false);
   const { getAllTaxis, bookTaxi } = useBookingHook();
 
   const [TaxiList, setTaxiList] = useState<TaxiTypes[]>([]);
   //   search taxi
   const handleSearchTaxi = async () => {
+    setShowList(true);
     const response = await getAllTaxis(input.date.toDateString());
     if (!("error" in response)) {
       setTaxiList(response);
@@ -113,60 +115,81 @@ const TaxiBookingModal = ({
               </Button>
             </DialogFooter>
           </div>
-          {TaxiList.length > 0 && (
-            <div className="flex flex-col gap-2 max-h-[50%] my-5">
-              <div className="flex items-center justify-center relative">
-                <Button
-                  variant={"ghost"}
-                  size={"icon"}
-                  className="absolute right-0 top-0"
-                  onClick={() => setTaxiList([])}
-                >
-                  <X />
-                </Button>
-                <h2 className="text-xl font-bold">Taxi List</h2>
-              </div>
-              <div className="flex flex-col gap-4  overflow-auto details-container">
-                {TaxiList.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-3 border-2 border-gray-300 rounded-lg shadow-xl"
+          {showList ? (
+            TaxiList.length > 0 ? (
+              <div className="flex flex-col gap-2 max-h-[50%] my-5">
+                <div className="flex items-center justify-center relative">
+                  <Button
+                    variant={"ghost"}
+                    size={"icon"}
+                    className="absolute right-0 top-0"
+                    onClick={() => {
+                      setShowList(false);
+                      setTaxiList([]);
+                    }}
                   >
-                    <div className="flex items-center flex-col sm:flex-row justify-between">
-                      <div className="flex flex-col gap-1">
-                        <span className="flex items-center gap-1 text-sm font-medium">
-                          {item.vehicleNumber}
-                        </span>
-                        <span className="flex items-center gap-1 text-sm font-medium">
-                          {item.driverPhoneNumber}
-                        </span>
-                        <span className="flex items-center gap-1 text-sm font-medium">
-                          {item.seats}
-                        </span>
-                        <span className="flex items-center gap-1 text-sm font-medium">
-                          {item.model}
-                        </span>
+                    <X />
+                  </Button>
+                  <h2 className="text-xl font-bold">Taxi List</h2>
+                </div>
+                <div className="flex flex-col gap-4  overflow-auto details-container">
+                  {TaxiList.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-3 border-2 border-gray-300 rounded-lg shadow-xl"
+                    >
+                      <div className="flex items-center flex-col sm:flex-row justify-between">
+                        <div className="flex flex-col gap-1">
+                          <span className="flex items-center gap-1 text-sm font-medium">
+                            {item.vehicleNumber}
+                          </span>
+                          <span className="flex items-center gap-1 text-sm font-medium">
+                            {item.driverPhoneNumber}
+                          </span>
+                          <span className="flex items-center gap-1 text-sm font-medium">
+                            {item.seats}
+                          </span>
+                          <span className="flex items-center gap-1 text-sm font-medium">
+                            {item.model}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-2 items-center justify-center max-sm:mt-4">
+                        <div className="flex flex-col mx-auto">
+                          <h4 className="font-bold text-xl text-gradient">
+                            ₹{price}
+                          </h4>
+                        </div>
+                        <Button
+                          size="sm"
+                          className="primary-button sm:w-fit"
+                          onClick={() => handleBooking(item.id as string)}
+                        >
+                          Book Now
+                        </Button>
                       </div>
                     </div>
-                    <div className="flex flex-col gap-2 items-center justify-center max-sm:mt-4">
-                      <div className="flex flex-col mx-auto">
-                        <h4 className="font-bold text-xl text-gradient">
-                          ₹{price}
-                        </h4>
-                      </div>
-                      <Button
-                        size="sm"
-                        className="primary-button sm:w-fit"
-                        onClick={() => handleBooking(item.id as string)}
-                      >
-                        Book Now
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            ) : (
+              <div className="flex flex-col gap-2 max-h-[50%] my-5">
+                <div className="flex items-center justify-center relative">
+                  <Button
+                    variant={"ghost"}
+                    size={"icon"}
+                    className="absolute right-0 top-0"
+                    onClick={() => {
+                      setShowList(false);
+                    }}
+                  >
+                    <X />
+                  </Button>
+                  <h2 className="text-xl font-bold">No Taxi Available</h2>
+                </div>
+              </div>
+            )
+          ) : null}
         </DialogHeader>
       </DialogContent>
     </Dialog>

@@ -38,7 +38,7 @@ const TaxiBookingTable = () => {
             <TableHead className="w-[30px] border-r-2 border-gray-400">
               Sr.no
             </TableHead>
-            <TableHead className="border-r-2 border-gray-400">Date</TableHead>
+            <TableHead className="border-r-2 border-gray-400">Booking Date</TableHead>
             <TableHead className="border-r-2 border-gray-400">
               Source - Destination
             </TableHead>
@@ -59,7 +59,7 @@ const TaxiBookingTable = () => {
                 {index + 1}
               </TableCell>
               <TableCell className="border-r-2 border-gray-400">
-                {booking.date as string}
+                {booking.bookingDate as string}
               </TableCell>
               <TableCell className="border-r-2 border-gray-400">
                 {booking.source} - {booking.destination}

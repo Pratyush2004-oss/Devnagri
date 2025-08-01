@@ -1,7 +1,7 @@
 import { db } from "@/config";
 import { Bookings, Queries, TaxiBooking, Taxis, Users } from "@/config/schema";
 import { TaxiInputType } from "@/types";
-import { desc, eq, isNotNull } from "drizzle-orm";
+import { and, desc, eq, isNotNull, ne } from "drizzle-orm";
 import { toast } from "sonner";
 
 const useAdminHook = () => {
@@ -130,7 +130,7 @@ const useAdminHook = () => {
   // verify Booking
   const verifyBooking = async (
     id: number,
-    status: "approved" | "rejected",
+    status: "approved" | "rejected" | "pending",
     database: "bookings" | "taxi_bookings"
   ) => {
     try {
@@ -151,6 +151,18 @@ const useAdminHook = () => {
           .where(eq(TaxiBooking.id, id))
           .returning();
         if (response) {
+          // reject all other bookings of the vehicle for that date
+          response[0].status === "approved" &&
+            (await db
+              .update(TaxiBooking)
+              .set({ status: "rejected" })
+              .where(
+                and(
+                  eq(TaxiBooking.taxi, response[0].taxi),
+                  eq(TaxiBooking.bookingDate, response[0].bookingDate),
+                  ne(TaxiBooking.id, response[0].id)
+                )
+              ));
           toast.success(`Booking ${status} successfully`);
         }
       }

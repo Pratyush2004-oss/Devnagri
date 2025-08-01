@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { BookingType, TaxiBookingsTypes } from "@/types";
-import { CheckCircle, ChevronDown, XCircle } from "lucide-react";
+import { CheckCircle, ChevronDown, Info, XCircle } from "lucide-react";
 import useAdminHook from "../_hook/admin.hooks";
 import { useState } from "react";
 
@@ -21,7 +21,7 @@ function StatusPopOver({
   const [status, setStatus] = useState(booking.status);
   const { verifyBooking } = useAdminHook();
 
-  const handleStatusChange = (newStatus: "approved" | "rejected") => {
+  const handleStatusChange = (newStatus: "approved" | "rejected" | "pending") => {
     verifyBooking(booking.id || 0, newStatus, db);
     setStatus(newStatus);
   };
@@ -48,6 +48,14 @@ function StatusPopOver({
         >
           <CheckCircle className="text-white" />
           Approve
+        </DropdownMenuItem>
+          <DropdownMenuSeparator />
+        <DropdownMenuItem
+          className="flex cursor-pointer items-center gap-2 bg-yellow-500 text-white font-medium"
+          onClick={() => handleStatusChange("pending")}
+        >
+          <Info className="text-white" />
+          Pending
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
