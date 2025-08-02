@@ -8,10 +8,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 
-export function TourCard({ tour }: { tour: TourType }) {
+export function TourCard({ tour, shrink }: { tour: TourType; shrink?: boolean }) {
   const router = useRouter();
   return (
-    <Card className="relative max-sm:w-[90%] max-sm:aspect-[4/3] w-full mx-auto aspect-[4/5] overflow-hidden rounded-lg shadow-lg group">
+    <Card className={`${shrink ? "aspect-[1/1]" : "aspect-[4/5]  max-sm:aspect-[4/3]" } relative max-sm:w-[90%] w-full mx-autooverflow-hidden rounded-lg shadow-lg group`}>
       <CardContent>
         {/* Background Image Container */}
         <Image
