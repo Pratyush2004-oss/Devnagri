@@ -142,6 +142,7 @@ const useAdminHook = () => {
           .returning();
         if (response) {
           toast.success(`Booking ${status} successfully`);
+          return { database: "bookings", response };
         }
       }
       if (database === "taxi_bookings") {
@@ -164,6 +165,7 @@ const useAdminHook = () => {
                 )
               ));
           toast.success(`Booking ${status} successfully`);
+          return { database: "taxi_bookings", response };
         }
       }
     } catch (error) {

@@ -14,30 +14,38 @@ import { useState } from "react";
 function StatusPopOver({
   booking,
   db,
+  fetchBookings,
+  fetchTaxiBookings,
+  offset,
 }: {
   booking: BookingType | TaxiBookingsTypes;
   db: "bookings" | "taxi_bookings";
+  fetchBookings?: (offset: number) => Promise<void>;
+  fetchTaxiBookings?: (offset: number) => Promise<void>;
+  offset: number;
 }) {
-  const [status, setStatus] = useState(booking.status);
   const { verifyBooking } = useAdminHook();
 
-  const handleStatusChange = (newStatus: "approved" | "rejected" | "pending") => {
-    verifyBooking(booking.id || 0, newStatus, db);
-    setStatus(newStatus);
+  const handleStatusChange = async (
+    newStatus: "approved" | "rejected" | "pending"
+  ) => {
+    const response = await verifyBooking(booking.id || 0, newStatus, db);
+    if (response?.database === "bookings") fetchBookings?.(offset || 0);
+    if (response?.database === "taxi_bookings") fetchTaxiBookings?.(offset);
   };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Badge
           className={`cursor-pointer ${
-            status?.toLowerCase() === "pending"
+            booking.status?.toLowerCase() === "pending"
               ? "bg-yellow-500 animate-bounce"
-              : status?.toLowerCase() === "approved"
+              : booking.status?.toLowerCase() === "approved"
               ? "bg-green-500"
               : "bg-red-500"
           }`}
         >
-          {status?.toUpperCase()}
+          {booking.status?.toUpperCase()}
           <ChevronDown />
         </Badge>
       </DropdownMenuTrigger>
@@ -49,7 +57,7 @@ function StatusPopOver({
           <CheckCircle className="text-white" />
           Approve
         </DropdownMenuItem>
-          <DropdownMenuSeparator />
+        <DropdownMenuSeparator />
         <DropdownMenuItem
           className="flex cursor-pointer items-center gap-2 bg-yellow-500 text-white font-medium"
           onClick={() => handleStatusChange("pending")}

@@ -20,12 +20,13 @@ const BookingTable = () => {
   const [bookings, setBookings] = useState<BookingType[]>([]);
   const [offset, setoffset] = useState(1);
   const { fetchBookings } = useAdminHook();
+
+  const fetchBookingsAsync = async (offset: number) => {
+    const bookings = await fetchBookings(offset);
+    setBookings(bookings);
+  };
   useEffect(() => {
-    const fetchBookingsAsync = async () => {
-      const bookings = await fetchBookings(offset);
-      setBookings(bookings);
-    };
-    fetchBookingsAsync();
+    fetchBookingsAsync(offset);
   }, [offset]);
 
   if (bookings.length === 0)
@@ -74,7 +75,12 @@ const BookingTable = () => {
                 <UserAvatar User={booking.user} />
               </TableCell>
               <TableCell className="text-right border-r-2 border-gray-400">
-                <StatusPopOver booking={booking} db="bookings" />
+                <StatusPopOver
+                  fetchBookings={() => fetchBookingsAsync(offset)}
+                  booking={booking}
+                  db="bookings"
+                  offset={offset}
+                />
               </TableCell>
             </TableRow>
           ))}

@@ -20,12 +20,12 @@ const TaxiBookingTable = () => {
   const { fetchTaxiBookings } = useAdminHook();
   const [offset, setoffset] = useState(1);
 
+  const fetchTaxiBookingsAsync = async (offset: number) => {
+    const taxiBookings = await fetchTaxiBookings(offset);
+    settaxiBookings(taxiBookings);
+  };
   useEffect(() => {
-    const fetchTaxiBookingsAsync = async () => {
-      const taxiBookings = await fetchTaxiBookings(offset);
-      settaxiBookings(taxiBookings);
-    };
-    fetchTaxiBookingsAsync();
+    fetchTaxiBookingsAsync(offset);
   }, [offset]);
 
   if (taxiBookings.length === 0)
@@ -38,7 +38,9 @@ const TaxiBookingTable = () => {
             <TableHead className="w-[30px] border-r-2 border-gray-400">
               Sr.no
             </TableHead>
-            <TableHead className="border-r-2 border-gray-400">Booking Date</TableHead>
+            <TableHead className="border-r-2 border-gray-400">
+              Booking Date
+            </TableHead>
             <TableHead className="border-r-2 border-gray-400">
               Source - Destination
             </TableHead>
@@ -74,7 +76,12 @@ const TaxiBookingTable = () => {
                 <TaxiInformation Taxi={booking.taxi} />
               </TableCell>
               <TableCell className="text-right border-r-2 border-gray-400">
-                <StatusPopOver booking={booking} db="taxi_bookings" />
+                <StatusPopOver
+                  fetchTaxiBookings={() => fetchTaxiBookingsAsync(offset)}
+                  booking={booking}
+                  db="taxi_bookings"
+                  offset={offset}
+                />
               </TableCell>
             </TableRow>
           ))}
