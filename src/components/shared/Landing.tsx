@@ -10,7 +10,6 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import SearchTaxi from "../../app/taxi-services/_components/SearchTaxi";
 
 export function Landing() {
   const plugin = React.useRef(
@@ -38,15 +37,12 @@ export function Landing() {
                       <span className="text-primary"> Uttarakhand</span>
                     </h1>
                   </div>
-                  <div className="col-span-2">
-                    <SearchTaxi />
-                  </div>
                 </div>
               </div>
               <Card className="w-full p-0">
                 <CardContent className="flex aspect-video h-full items-center justify-center mx-auto w-full">
                   <Image
-                    src={"/devnagri.png"}
+                    src={"https://media.istockphoto.com/id/2169995482/photo/landscape-of-roys-peak-summit-with-foggy-mountain-and-tourist-enjoying-in-autumn-at-new.webp?a=1&b=1&s=612x612&w=0&k=20&c=mzs6MjevR4VNv_ZLR0-Wa3s5rLyd2eoCKFur9KSzJek="}
                     height={1000}
                     width={1000}
                     priority

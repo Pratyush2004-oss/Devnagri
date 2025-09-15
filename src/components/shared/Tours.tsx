@@ -4,7 +4,7 @@ import { TourCard } from "./ToursCard";
 
 const Tours = () => {
   return (
-    <div className="gradient-border">
+    <div className="gradient-border max-w-[1200px]">
       <div className="flex items-center justify-center">
         <h1 className="text-2xl font-bold">Tours</h1>
       </div>

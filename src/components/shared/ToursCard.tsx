@@ -11,14 +11,14 @@ import { Button } from "../ui/button";
 export function TourCard({ tour, shrink }: { tour: TourType; shrink?: boolean }) {
   const router = useRouter();
   return (
-    <Card className={`${shrink ? "aspect-[1/1]" : "aspect-[4/5]  max-sm:aspect-[4/3]" } relative max-sm:w-[90%] w-full mx-autooverflow-hidden rounded-lg shadow-lg group`}>
-      <CardContent>
+    <Card className={`${shrink ? "aspect-[1/1]" : "aspect-[4/5]  max-sm:aspect-[4/3]" } relative max-sm:w-[90%] w-full mx-auto overflow-hidden rounded-lg shadow-lg group`}>
+      <CardContent className="rounded-lg">
         {/* Background Image Container */}
         <Image
-          src={"/devnagri.png"}
+          src={tour.image}
           alt={tour.name}
           fill
-          className="object-cover group-hover:scale-105 group"
+          className="object-cover group-hover:scale-105 group rounded-lg"
         />
 
         {/* Overlay for Name and Days - Animated with Framer Motion */}
