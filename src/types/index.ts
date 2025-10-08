@@ -70,19 +70,73 @@ export type Itinerary = {
   description?: string;
 };
 
-export type TourType = {
+/**
+ * Interface for a single day's plan within the tour itinerary.
+ */
+interface ItineraryDay {
+  day: number;
+  title: string;
+  details: string[];
+  inclusions?: string;
+  night_stay?: string;
+  distance?: string; // Optional field for distance covered
+  duration?: string; // Optional field for travel duration
+}
+
+/**
+ * Interface for the pricing structure, accommodating different plans.
+ */
+interface Price {
+  standard_plan: number | string;
+  deluxe_plan: number | string;
+}
+
+/**
+ * Interface for the tour operator's contact information.
+ */
+interface TourOperator {
+  name: string;
+  contact_number: string;
+  website: string;
+  email: string;
+}
+
+/**
+ * Interface for the terms and conditions, with optional fields
+ * as they can vary between different tour packages.
+ */
+interface TermsAndConditions {
+  payment?: string;
+  identification?: string;
+  booking?: string;
+  refunds?: string;
+  luggage?: string;
+  punctuality?: string;
+  vehicle_ac?: string;
+  conduct?: string;
+  liability?: string;
+  itinerary_changes?: string;
+}
+
+/**
+ * The main interface representing the entire tour package data structure.
+ * This can be used to type the JSON object for your web application.
+ */
+export type TourPackage = {
   __id: string;
   name: string;
-  image: string;
-  days: number;
-  nights: number;
-  Overview: string[] | undefined;
-  Highlights?: string[] | undefined;
-  Inclusion: string[] | undefined;
-  Exclusion: string[] | undefined;
-  Itinerary: Itinerary[] | undefined;
-  FAQs: Itinerary[] | undefined;
-  Price?: number;
+  overview: string;
+  description: string; // This field contains HTML content for direct rendering.
+  itinerary: ItineraryDay[];
+  images: string[];
+  price: Price | string; // Can be a Price object or a string like "Available on Request".
+  days: number | string;
+  places: string[];
+  tour_operator: TourOperator;
+  inclusions: string[];
+  packing_list?: string[]; // Optional as not all packages might list this.
+  terms_and_conditions: TermsAndConditions;
+  cancellation_policy: string;
 };
 
 export type BookingInput = {
