@@ -26,6 +26,7 @@ const useAdminHook = () => {
       })
       .from(Bookings)
       .fullJoin(Users, eq(Users.id, Bookings.user))
+      .where(isNotNull(Bookings.id))
       .limit(10)
       .offset(offset - 1)
       .orderBy(desc(Bookings.id));

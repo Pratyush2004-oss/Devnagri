@@ -13,20 +13,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
-export function Landing() {
+export function Landing({ IMAGES }: { IMAGES: string[] }) {
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true })
   );
 
   return (
     <Carousel
-      plugins={[plugin.current]}
+      orientation="horizontal"
+      plugins={[
+        plugin.current,
+        Autoplay({
+          delay: 1500,
+        }),
+      ]}
       className="w-full"
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
     >
       <CarouselContent className="w-full h-full">
-        {Array.from({ length: 5 }).map((_, index) => (
+        {IMAGES.slice(0, 7).map((_, index) => (
           <CarouselItem key={index} className="w-full">
             <div className="w-full relative">
               {/* image data or landing data */}
@@ -98,9 +104,7 @@ export function Landing() {
                 <CardContent className="flex aspect-video h-full items-center justify-center mx-auto w-full p-0">
                   <div className="relative w-full h-full">
                     <Image
-                      src={
-                        "https://media.istockphoto.com/id/2169995482/photo/landscape-of-roys-peak-summit-with-foggy-mountain-and-tourist-enjoying-in-autumn-at-new.webp?a=1&b=1&s=612x612&w=0&k=20&c=mzs6MjevR4VNv_ZLR0-Wa3s5rLyd2eoCKFur9KSzJek="
-                      }
+                      src={IMAGES[index]}
                       fill
                       priority
                       alt="devnagri"

@@ -1,19 +1,10 @@
 "use client";
 
 import { Star } from "lucide-react";
-import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import DOMPurify from "dompurify";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 // carousel removed - using animated grid instead
-import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "@/components/ui/collapsible";
-import { motion, AnimatePresence } from "framer-motion";
-import { TOURS } from "@/constants/packages";
-import { TourPackage } from "@/types";
 import BookingCard from "@/components/shared/BookingCard";
 import { TourCard } from "@/components/shared/ToursCard";
 import {
@@ -21,7 +12,15 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { TOURS } from "@/constants/packages";
+import { TourPackage } from "@/types";
 import Autoplay from "embla-carousel-autoplay";
+import { AnimatePresence, motion } from "framer-motion";
 
 function PackageDetail() {
   const { packageId } = useParams();
@@ -45,17 +44,38 @@ function PackageDetail() {
       <div className="p-6 md:p-10">
         <div className="flex flex-col gap-6 ">
           <div className="w-full relative max-h-[650px] overflow-hidden">
-            <Image
-              src={Package.images?.[0] ?? ""}
-              alt={Package.name}
-              layout="responsive"
-              width={1500}
-              height={1200}
-              className="w-full h-[500px] object-cover rounded-lg"
-            />
-            <h1 className="text-xl md:text-2xl font-bold absolute top-3/5 md:top-4/5 ml-3 text-white  p-2 rounded-lg">
-              {Package.name}
-            </h1>
+            <Carousel
+              plugins={[
+                Autoplay({
+                  delay: 3000,
+                }),
+              ]}
+              className="w-full"
+            >
+              <CarouselContent className="p-0">
+                {(Package.images && Package.images.length > 0
+                  ? Package.images
+                  : [""]
+                ).map((src, idx) => (
+                  <CarouselItem key={idx} className="relative">
+                    <div className="relative w-full h-[500px] rounded-lg overflow-hidden">
+                      <Image
+                        src={src ?? ""}
+                        alt={`${Package.name} ${idx + 1}`}
+                        fill
+                        sizes="(min-width: 1024px) 1500px, 00px"
+                        className="object-cover"
+                      />
+                      {/* subtle gradient for text legibility */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                      <h2 className="absolute left-4 bottom-4 text-white text-lg md:text-2xl font-bold bg-black/40 px-3 py-1 rounded">
+                        {Package.name}
+                      </h2>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
           <div className="flex flex-col md:flex-row">
             <div className="w-full flex flex-col justify-center px-2 md:w-3/5">
@@ -66,7 +86,7 @@ function PackageDetail() {
                     <CollapsibleTrigger asChild>
                       <button className="w-full text-left flex items-center justify-between">
                         <h1 className="text-xl font-bold">Overview</h1>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-muted-foreground bg-gradient-to-r from-light-blue-100 to-light-blue-200 px-2 rounded-lg p-1">
                           {openOverview ? "Hide" : "Show"}
                         </span>
                       </button>
@@ -103,7 +123,7 @@ function PackageDetail() {
                     <CollapsibleTrigger asChild>
                       <button className="w-full text-left flex items-center justify-between">
                         <h1 className="text-xl font-bold">Places Covered</h1>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-muted-foreground bg-gradient-to-r from-light-blue-100 to-light-blue-200 px-2 rounded-lg p-1">
                           {openHighlights ? "Hide" : "Show"}
                         </span>
                       </button>
@@ -117,15 +137,14 @@ function PackageDetail() {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.25 }}
-                            className="flex flex-col gap-3 mt-4"
+                            className="grid grid-cols-4 gap-3 mt-4 flex-wrap"
                           >
                             {Package.places.map((item, idx) => (
                               <div
-                                className="flex items-center gap-2"
+                                className="flex items-center gap-2 rounded-lg border border-gray-300 p-2 shadow-lg bg-gradient-to-r from-light-blue-100 to-light-blue-200"
                                 key={idx}
                               >
-                                <Star className="ml-2 size-4 text-purple-700 fill-purple-600" />
-                                <p className="text-justify list-decimal list-inside text-sm font-medium text-gray-500">
+                                <p className=" list-decimal list-inside text-sm font-medium text-gray-500">
                                   {item}
                                 </p>
                               </div>
@@ -148,7 +167,7 @@ function PackageDetail() {
                     <CollapsibleTrigger asChild>
                       <button className="w-full text-left flex items-center justify-between">
                         <h1 className="text-xl font-bold">Itinerary</h1>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-muted-foreground bg-gradient-to-r from-light-blue-100 to-light-blue-200 px-2 rounded-lg p-1">
                           {openItinerary ? "Hide" : "Show"}
                         </span>
                       </button>
@@ -211,7 +230,7 @@ function PackageDetail() {
                     <CollapsibleTrigger asChild>
                       <button className="w-full text-left flex items-center justify-between">
                         <h1 className="text-xl font-bold">Inclusions</h1>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-muted-foreground bg-gradient-to-r from-light-blue-100 to-light-blue-200 px-2 rounded-lg p-1">
                           {openInclusion ? "Hide" : "Show"}
                         </span>
                       </button>
@@ -256,7 +275,7 @@ function PackageDetail() {
                     <CollapsibleTrigger asChild>
                       <button className="w-full text-left flex items-center justify-between">
                         <h1 className="text-xl font-bold">Packing List</h1>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-muted-foreground bg-gradient-to-r from-light-blue-100 to-light-blue-200 px-2 rounded-lg p-1">
                           {openExclusion ? "Hide" : "Show"}
                         </span>
                       </button>
@@ -301,7 +320,7 @@ function PackageDetail() {
                         <h1 className="text-xl font-bold">
                           Terms & Cancellation
                         </h1>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-muted-foreground bg-gradient-to-r from-light-blue-100 to-light-blue-200 px-2 rounded-lg p-1">
                           {openFaqs ? "Hide" : "Show"}
                         </span>
                       </button>
