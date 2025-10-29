@@ -314,13 +314,13 @@ export const TOURS = [
     ],
     images: [
       "/Landing-1.jpg",
+      "/AK-7.jpg",
       "/AK-1.jpg",
       "/AK-2.jpg",
       "/AK-3.jpg",
       "/AK-4.jpg",
       "/AK-5.jpg",
       "/AK-6.jpg",
-      "/AK-7.jpg",
       "/AK-8.jpg",
     ],
     price: {
@@ -434,7 +434,7 @@ export const TOURS = [
         night_stay: "N/A",
       },
     ],
-    images: ["/Landing-6.jpg", "/KM-1.jpg", "AK-5.jpg", "/D-1.jpg", "/D-2.jpg"],
+    images: ["/Landing-6.jpg", "/D-1.jpg", "/KM-1.jpg", "AK-5.jpg", "/D-2.jpg"],
     price: {
       standard_plan: 12000,
       deluxe_plan: 15000,
@@ -541,6 +541,7 @@ export const TOURS = [
     ],
     images: [
       "/Landing-3.jpg",
+      "/AK-10.jpg",
       "/AK-1.jpg",
       "/AK-2.jpg",
       "/AK-3.jpg",
@@ -550,7 +551,6 @@ export const TOURS = [
       "/AK-7.jpg",
       "/AK-8.jpg",
       "/AK-9.jpg",
-      "/AK-10.jpg",
       "/AK-11.jpg",
       "/AK-12.jpg",
       "/D-1.jpg",
@@ -778,6 +778,7 @@ export const TOURS = [
     ],
     images: [
       "/Landing-4.jpg",
+      "/AK-14.jpg",
       "/AK-1.jpg",
       "/AK-2.jpg",
       "/AK-3.jpg",
@@ -791,12 +792,19 @@ export const TOURS = [
       "/AK-11.jpg",
       "/AK-12.jpg",
       "/AK-13.jpg",
-      "/AK-14.jpg",
       "/AK-15.jpg",
     ],
-    price:
-      "Available on Request (with Taxi-Only, Full-Service, or Premium options)",
     days: 11,
+    price: {
+      standard_plan: 22000,
+      deluxe_plan: 25000,
+    },
+    tour_operator: {
+      name: "Devnagari Tour and Travels",
+      contact_number: "9456193464",
+      website: "https://devnagaritourtravels.com/",
+      email: "info@devnagaritourtravels.com",
+    },
     places: [
       "Pithoragarh",
       "Karanprayag",
@@ -858,5 +866,14 @@ export const TOURS = [
       "Personalized Itinerary & Local Insights.",
       "Commitment to Safety & Satisfaction.",
     ],
+    terms_and_conditions: {
+      payment: "Full payment for the trip must be completed before departure.",
+      identification:
+        "All travelers must carry and present a valid government-issued ID.",
+      booking: "Bookings are non-transferable.",
+    },
+    cancellation_policy:
+      "A 30% advance payment of the total trip cost is mandatory at the time of booking to confirm your participation. This advance amount is strictly non-refundable.",
+    pdf_url: "",
   },
 ];

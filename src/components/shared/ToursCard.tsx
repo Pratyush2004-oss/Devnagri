@@ -50,7 +50,7 @@ export function TourCard({
       <CardContent className="rounded-lg">
         {/* Background Image Container */}
         <Image
-          src={tour.images[0]}
+          src={tour.images[1]}
           alt={tour.name}
           fill
           className="object-cover group-hover:scale-105 group rounded-lg"
