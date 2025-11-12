@@ -174,7 +174,7 @@ export const TOURS = [
       "/C-4.jpg",
       "/D-1.jpg",
       "/D-2.jpg",
-      "KM-1.jpg",
+      "/KM-1.jpg",
       "/Gh-1.jpg",
       "/N-1.jpg",
       "/Jt-1.jpg",
@@ -434,7 +434,7 @@ export const TOURS = [
         night_stay: "N/A",
       },
     ],
-    images: ["/Landing-6.jpg", "/D-1.jpg", "/KM-1.jpg", "AK-5.jpg", "/D-2.jpg"],
+    images: ["/Landing-6.jpg", "/D-1.jpg", "/KM-1.jpg", "/AK-5.jpg", "/D-2.jpg"],
     price: {
       standard_plan: 12000,
       deluxe_plan: 15000,
