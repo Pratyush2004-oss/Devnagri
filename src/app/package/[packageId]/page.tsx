@@ -36,7 +36,7 @@ function PackageDetail() {
   useEffect(() => {
     // use find for clarity
     const found = TOURS.find((p) => p.__id === packageId) ?? null;
-    setPackage(found as unknown as TourPackage);
+    setPackage(found as TourPackage);
   }, [packageId]);
 
   return (
@@ -378,14 +378,21 @@ function PackageDetail() {
                     ? Package.days
                     : parseInt(String(Package.days).replace(/[^0-9]/g, "")) ||
                       0;
-                const price =
-                  typeof Package.price === "object"
-                    ? Number(
-                        String(
-                          (Package.price as any).standard_plan || 0
-                        ).replace(/[^0-9]/g, "")
-                      ) || 0
-                    : Number(String(Package.price).replace(/[^0-9]/g, "")) || 0;
+                const price = (() => {
+                  const p = Package.price;
+                  if (
+                    typeof p === "object" &&
+                    p !== null &&
+                    "standard_plan" in p
+                  ) {
+                    const standard = (p as { standard_plan?: number | string })
+                      .standard_plan;
+                    return (
+                      Number(String(standard ?? 0).replace(/[^0-9]/g, "")) || 0
+                    );
+                  }
+                  return Number(String(p).replace(/[^0-9]/g, "")) || 0;
+                })();
                 return (
                   <BookingCard
                     props={{

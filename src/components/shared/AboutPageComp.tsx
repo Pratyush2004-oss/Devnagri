@@ -273,7 +273,7 @@ export default function AboutPageComp() {
           <h3 className="text-xl font-bold">Our Promise</h3>
           <p className="mt-3 text-gray-600 text-sm">
             We focus on authenticity, safety and meaningful travel moments that
-            connect you to Uttarakhand's culture and nature.
+            connect you to Uttarakhand&apos;s culture and nature.
           </p>
 
           <div className="mt-6 grid grid-cols-2 gap-3">

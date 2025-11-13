@@ -73,7 +73,7 @@ const useBookingHook = () => {
         .returning();
 
       if (response) {
-        toast.success("Taxi Booked Successfull....");
+        toast.success("Taxi Booked Successfully");
         router.push("/bookings");
       }
     } catch (error) {
