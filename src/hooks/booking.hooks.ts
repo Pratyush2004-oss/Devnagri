@@ -2,7 +2,7 @@ import { db } from "@/config";
 import { Bookings, TaxiBooking, Taxis, Users } from "@/config/schema";
 import { useUserStore } from "@/store/user.store";
 import { BookingInput, TaxiBookingInput } from "@/types";
-import { and, desc, eq, inArray, ne, notInArray, or } from "drizzle-orm";
+import { and, desc, eq, inArray, notInArray } from "drizzle-orm";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -58,7 +58,6 @@ const useBookingHook = () => {
         toast.error("All fields are required");
         return;
       }
-      if (!user) return toast.error("User not found");
       const response = await db
         .insert(TaxiBooking)
         .values({

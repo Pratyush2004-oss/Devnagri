@@ -42,9 +42,9 @@ function BookingCard({ props }: { props: Props }) {
   useEffect(() => {
     setInput({
       ...input,
-      PackagePrice: input.people * input.PackageDays * props.PackagePrice,
+      PackagePrice: input.people * props.PackagePrice,
     });
-  }, [input.PackageDays, input.people]);
+  }, [input.PackageDays, input.people, input, input.PackagePrice]);
   const { bookTour } = useBookingHook();
 
   // handle booking controller
@@ -115,10 +115,10 @@ function BookingCard({ props }: { props: Props }) {
                 className="cursor-pointer"
                 onClick={() => {
                   if (input.PackageDays <= 1) return;
-                  setInput({
-                    ...input,
-                    PackageDays: input.PackageDays - 1,
-                  });
+                  // setInput({
+                  //   ...input,
+                  //   PackageDays: input.PackageDays - 1,
+                  // });
                 }}
               >
                 <MinusCircle className="size-5" strokeWidth={2} />
@@ -131,10 +131,10 @@ function BookingCard({ props }: { props: Props }) {
                 variant={"ghost"}
                 className="cursor-pointer"
                 onClick={() => {
-                  setInput({
-                    ...input,
-                    PackageDays: input.PackageDays + 1,
-                  });
+                  // setInput({
+                  //   ...input,
+                  //   PackageDays: input.PackageDays + 1,
+                  // });
                 }}
               >
                 <PlusCircle className="size-5" strokeWidth={2} />

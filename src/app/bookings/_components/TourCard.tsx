@@ -8,12 +8,13 @@ import {
 } from "@/components/ui/card";
 import { IMAGES } from "@/constants/packages";
 import { BookingType } from "@/types";
+import Image from "next/image";
 
 function BookedTourCard({ pack }: { pack: BookingType; lineclamp?: boolean }) {
   return (
     <Card className="border rounded-3xl shadow-md gradient-border">
       <CardHeader>
-        <img
+        <Image
           src={IMAGES[Math.floor(Math.random() * IMAGES.length)]}
           alt={pack.name ?? ""}
           width={500}

@@ -17,7 +17,7 @@ const Details = () => {
       setDetails(details);
     };
     fetchDetailsAsync();
-  }, []);
+  }, [fetchDetails]);
   return (
     <div className="w-full">
       <div className="flex justify-center">

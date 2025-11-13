@@ -1,16 +1,13 @@
 "use client";
-import React from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  Twitter,
-  Instagram,
-  Youtube,
-  Mail,
-  Globe,
   Facebook,
-  Phone,
+  Globe,
+  Instagram,
+  Mail,
+  Phone
 } from "lucide-react";
+import Link from "next/link";
 
 const nav = [
   { label: "Home", href: "/" },

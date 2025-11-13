@@ -10,7 +10,7 @@ const Redirect = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [checkAuth]);
   if (isCheckingUser)
     return (
       <div className="flex justify-center items-center h-[calc(100vh-100px)]">

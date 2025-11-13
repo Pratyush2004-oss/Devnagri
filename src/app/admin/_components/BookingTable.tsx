@@ -27,7 +27,7 @@ const BookingTable = () => {
   };
   useEffect(() => {
     fetchBookingsAsync(offset);
-  }, [offset]);
+  }, [offset, fetchBookingsAsync]);
 
   if (bookings.length === 0)
     return <h5 className="text-center mt-10">No Bookings found</h5>;

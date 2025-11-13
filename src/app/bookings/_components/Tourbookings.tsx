@@ -14,7 +14,7 @@ const Tourbookings = () => {
       setBookings(fetchedBookings);
     };
     fetchBookingsAsync();
-  }, []);
+  }, [getAllTourBookings]);
   if (bookings.length === 0)
     return <h5 className="text-center mt-10">No Bookings found</h5>;
   return (

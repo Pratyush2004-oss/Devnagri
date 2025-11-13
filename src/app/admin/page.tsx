@@ -1,13 +1,4 @@
 "use client";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useUserStore } from "@/store/user.store";
 import {
@@ -16,11 +7,11 @@ import {
   MessageCircleQuestionIcon,
 } from "lucide-react";
 import Image from "next/image";
+import AddTaxiInformation from "./_components/AddTaxiInformation";
 import BookingTable from "./_components/BookingTable";
 import Details from "./_components/Details";
 import QueriesTable from "./_components/QueriesTable";
 import TaxiBookingTable from "./_components/TaxiBookingTable";
-import AddTaxiInformation from "./_components/AddTaxiInformation";
 const AdminPanel = () => {
   const { isAdmin } = useUserStore();
 

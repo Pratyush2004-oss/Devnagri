@@ -22,7 +22,7 @@ const QueriesTable = () => {
       setQueries(queries);
     };
     fetchQueriesAsync();
-  }, [offset]);
+  }, [offset, fetchQueries]);
 
   if (queries.length === 0)
     return <h5 className="text-center mt-10">No Queries found</h5>;

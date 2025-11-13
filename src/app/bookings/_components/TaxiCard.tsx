@@ -10,12 +10,13 @@ import {
 import { IMAGES } from "@/constants/packages";
 import TaxiInformation from "@/components/shared/TaxiInformation";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 const TaxiBookingCard = ({ pack }: { pack: TaxiBookingsTypes }) => {
   return (
     <Card className="border rounded-3xl shadow-md gradient-border">
       <CardHeader>
-        <img
+        <Image
           src={IMAGES[Math.floor(Math.random() * IMAGES.length)]}
           alt={pack.taxi?.id ?? ""}
           width={500}

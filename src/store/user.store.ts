@@ -16,7 +16,7 @@ interface UserStore {
   logout: () => void;
 }
 
-export const useUserStore = create<UserStore>((set, get) => ({
+export const useUserStore = create<UserStore>((set) => ({
   user: null,
   isCheckingUser: true,
   isAdmin: false,
