@@ -319,7 +319,7 @@ export default function AboutPageComp() {
                 A
               </div>
               <div>
-                <div className="font-semibold">Amit Sharma</div>
+                <div className="font-semibold">Priyanshu Verma</div>
                 <div className="text-xs text-gray-500">Founder & Guide</div>
               </div>
             </div>
@@ -339,7 +339,7 @@ export default function AboutPageComp() {
                 R
               </div>
               <div>
-                <div className="font-semibold">Rohit Negi</div>
+                <div className="font-semibold">Harshwardhan Joshi</div>
                 <div className="text-xs text-gray-500">Logistics</div>
               </div>
             </div>
