@@ -1,0 +1,134 @@
+"use client";
+
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+type FormValues = {
+  name: string;
+  email: string;
+  query: string;
+};
+
+export default function ContactPage() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({ mode: "onTouched" });
+
+  const [sent, setSent] = useState(false);
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      // simulate network request
+      await new Promise((res) => setTimeout(res, 700));
+      setSent(true);
+      toast.success("Query submitted — we'll get back to you soon.");
+      reset();
+    } catch (err) {
+      toast.error("Submission failed. Please try again.");
+    }
+  };
+
+  return (
+    <main className="p-6 md:p-10 max-w-3xl mx-auto">
+      <motion.header
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35 }}
+        className="text-center mb-6"
+      >
+        <h1 className="text-2xl md:text-3xl font-bold">
+          Contact Devnagri Tourism
+        </h1>
+        <p className="mt-2 text-sm text-gray-600">
+          Have questions or need a custom itinerary? Send us a message and we'll
+          respond within 24 hours.
+        </p>
+      </motion.header>
+
+      <motion.form
+        onSubmit={handleSubmit(onSubmit)}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.35 }}
+        className="bg-white rounded-xl shadow-md p-6 grid gap-4"
+      >
+        <div className="w-5/6 mx-auto">
+          <label className="text-sm font-medium">Name</label>
+          <input
+            {...register("name", { required: "Name is required" })}
+            className={`mt-1 w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300 ${
+              errors.name ? "border-red-300" : "border-gray-200"
+            }`}
+            placeholder="Your full name"
+            aria-invalid={errors.name ? "true" : "false"}
+          />
+          {errors.name && (
+            <p className="text-xs text-red-600 mt-1">{errors.name.message}</p>
+          )}
+        </div>
+
+        <div className="w-5/6 mx-auto">
+          <label className="text-sm font-medium">Email</label>
+          <input
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Enter a valid email",
+              },
+            })}
+            className={`mt-1 w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300 ${
+              errors.email ? "border-red-300" : "border-gray-200"
+            }`}
+            placeholder="you@example.com"
+            aria-invalid={errors.email ? "true" : "false"}
+          />
+          {errors.email && (
+            <p className="text-xs text-red-600 mt-1">{errors.email.message}</p>
+          )}
+        </div>
+
+        <div className="w-5/6 mx-auto">
+          <label className="text-sm font-medium">Your Query</label>
+          <textarea
+            {...register("query", {
+              required: "Please describe your query",
+              minLength: {
+                value: 10,
+                message: "Tell us a little more (min 10 chars)",
+              },
+            })}
+            rows={6}
+            className={`mt-1 w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300 ${
+              errors.query ? "border-red-300" : "border-gray-200"
+            }`}
+            placeholder="How can we help you?"
+            aria-invalid={errors.query ? "true" : "false"}
+          />
+          {errors.query && (
+            <p className="text-xs text-red-600 mt-1">{errors.query.message}</p>
+          )}
+        </div>
+
+        <div className="flex items-center justify-between gap-4  mx-auto">
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="inline-flex items-center gap-2 rounded-lg bg-purple-700 text-white px-4 py-2 shadow hover:brightness-95 disabled:opacity-60"
+          >
+            {isSubmitting ? "Sending..." : "Send Query"}
+          </button>
+
+          {sent && (
+            <div className="text-sm text-green-600">Thanks — message sent.</div>
+          )}
+        </div>
+      </motion.form>
+    </main>
+  );
+}
