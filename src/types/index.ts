@@ -4,7 +4,6 @@ export type User = {
   email: string;
 };
 
-
 export type SignupInput = {
   name: string;
   email: string;
