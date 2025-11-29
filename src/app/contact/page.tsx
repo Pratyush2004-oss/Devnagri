@@ -4,12 +4,9 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-
-type FormValues = {
-  name: string;
-  email: string;
-  query: string;
-};
+import { QueryInputType } from "@/types";
+import useBookingHook from "@/hooks/booking.hooks";
+import { Button } from "@/components/ui/button";
 
 export default function ContactPage() {
   const {
@@ -17,17 +14,24 @@ export default function ContactPage() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({ mode: "onTouched" });
+  } = useForm<QueryInputType>({ mode: "onTouched" });
 
   const [sent, setSent] = useState(false);
+  const { sendQuery } = useBookingHook();
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: QueryInputType) => {
     try {
       // simulate network request
-      await new Promise((res) => setTimeout(res, 700));
-      setSent(true);
-      toast.success("Query submitted — we'll get back to you soon.");
-      reset();
+      await sendQuery(data)
+        .then(() => {
+          setSent(true);
+          toast.success("Query submitted — we'll get back to you soon.");
+          reset();
+        })
+        .catch(() => {
+          toast.error("Submission failed. Please try again.");
+        })
+        .finally(() => {});
     } catch (err) {
       toast.error("Submission failed. Please try again.");
     }
@@ -96,7 +100,7 @@ export default function ContactPage() {
         <div className="w-5/6 mx-auto">
           <label className="text-sm font-medium">Your Query</label>
           <textarea
-            {...register("query", {
+            {...register("message", {
               required: "Please describe your query",
               minLength: {
                 value: 10,
@@ -105,24 +109,26 @@ export default function ContactPage() {
             })}
             rows={6}
             className={`mt-1 w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300 ${
-              errors.query ? "border-red-300" : "border-gray-200"
+              errors.message ? "border-red-300" : "border-gray-200"
             }`}
             placeholder="How can we help you?"
-            aria-invalid={errors.query ? "true" : "false"}
+            aria-invalid={errors.message ? "true" : "false"}
           />
-          {errors.query && (
-            <p className="text-xs text-red-600 mt-1">{errors.query.message}</p>
+          {errors.message && (
+            <p className="text-xs text-red-600 mt-1">
+              {errors.message.message}
+            </p>
           )}
         </div>
 
         <div className="flex items-center justify-between gap-4  mx-auto">
-          <button
+          <Button
             type="submit"
             disabled={isSubmitting}
             className="inline-flex items-center gap-2 rounded-lg bg-purple-700 text-white px-4 py-2 shadow hover:brightness-95 disabled:opacity-60"
           >
             {isSubmitting ? "Sending..." : "Send Query"}
-          </button>
+          </Button>
 
           {sent && (
             <div className="text-sm text-green-600">Thanks — message sent.</div>

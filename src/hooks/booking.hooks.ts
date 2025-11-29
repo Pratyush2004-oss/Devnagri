@@ -1,7 +1,7 @@
 import { db } from "@/config";
-import { Bookings, TaxiBooking, Taxis, Users } from "@/config/schema";
+import { Bookings, Queries, TaxiBooking, Taxis, Users } from "@/config/schema";
 import { useUserStore } from "@/store/user.store";
-import { BookingInput, TaxiBookingInput } from "@/types";
+import { BookingInput, QueryInputType, TaxiBookingInput } from "@/types";
 import { and, desc, eq, inArray, notInArray } from "drizzle-orm";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -182,6 +182,29 @@ const useBookingHook = () => {
       return { error: "Something went wrong" };
     }
   };
+  // send query
+  const sendQuery = async (input: QueryInputType) => {
+    try {
+      if (!input.message || !input.email || !input.name) {
+        toast.error("All fields are required");
+        return;
+      }
+      const response = await db
+        .insert(Queries)
+        .values({
+          name: input.name,
+          email: input.email,
+          message: input.message,
+        } as any)
+        .returning();
+      if (response) {
+        toast.success("Query sent successfully");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
 
   return {
     bookTour,
@@ -189,6 +212,7 @@ const useBookingHook = () => {
     getAllTourBookings,
     getAllTaxiBookings,
     getAllTaxis,
+    sendQuery,
   };
 };
 
