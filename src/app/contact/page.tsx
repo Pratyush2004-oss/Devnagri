@@ -7,6 +7,10 @@ import { toast } from "sonner";
 import { QueryInputType } from "@/types";
 import useBookingHook from "@/hooks/booking.hooks";
 import { Button } from "@/components/ui/button";
+import { useUserStore } from "../../store/user.store";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 export default function ContactPage() {
   const {
@@ -18,6 +22,7 @@ export default function ContactPage() {
 
   const [sent, setSent] = useState(false);
   const { sendQuery } = useBookingHook();
+  const { user } = useUserStore();
 
   const onSubmit = async (data: QueryInputType) => {
     try {
@@ -63,13 +68,15 @@ export default function ContactPage() {
       >
         <div className="w-5/6 mx-auto">
           <label className="text-sm font-medium">Name</label>
-          <input
+          <Input
             {...register("name", { required: "Name is required" })}
             className={`mt-1 w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-300 ${
               errors.name ? "border-red-300" : "border-gray-200"
             }`}
             placeholder="Your full name"
             aria-invalid={errors.name ? "true" : "false"}
+            defaultValue={user ? user.name : ""}
+            disabled={user?.name !== null}
           />
           {errors.name && (
             <p className="text-xs text-red-600 mt-1">{errors.name.message}</p>
@@ -77,8 +84,8 @@ export default function ContactPage() {
         </div>
 
         <div className="w-5/6 mx-auto">
-          <label className="text-sm font-medium">Email</label>
-          <input
+          <Label className="text-sm font-medium">Email</Label>
+          <Input
             {...register("email", {
               required: "Email is required",
               pattern: {
@@ -91,6 +98,8 @@ export default function ContactPage() {
             }`}
             placeholder="you@example.com"
             aria-invalid={errors.email ? "true" : "false"}
+            defaultValue={user ? user.email : ""}
+            disabled={user?.email !== null}
           />
           {errors.email && (
             <p className="text-xs text-red-600 mt-1">{errors.email.message}</p>
@@ -98,8 +107,8 @@ export default function ContactPage() {
         </div>
 
         <div className="w-5/6 mx-auto">
-          <label className="text-sm font-medium">Your Query</label>
-          <textarea
+          <Label className="text-sm font-medium">Your Query</Label>
+          <Textarea
             {...register("message", {
               required: "Please describe your query",
               minLength: {
