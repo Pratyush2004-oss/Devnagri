@@ -66,6 +66,7 @@ export default function ContactPage() {
         transition={{ duration: 0.35 }}
         className="bg-white rounded-xl shadow-md p-6 grid gap-4"
       >
+        {/* Name */}
         <div className="w-5/6 mx-auto">
           <label className="text-sm font-medium">Name</label>
           <Input
@@ -83,6 +84,7 @@ export default function ContactPage() {
           )}
         </div>
 
+        {/* Email */}
         <div className="w-5/6 mx-auto">
           <Label className="text-sm font-medium">Email</Label>
           <Input
@@ -106,6 +108,7 @@ export default function ContactPage() {
           )}
         </div>
 
+        {/* Message */}
         <div className="w-5/6 mx-auto">
           <Label className="text-sm font-medium">Your Query</Label>
           <Textarea
