@@ -122,7 +122,9 @@ const UserDropdownIcon = () => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>My Bookings</DropdownMenuItem>
+        <DropdownMenuItem>
+          <Link href="/bookings">My Bookings</Link>
+        </DropdownMenuItem>
         {isAdmin && (
           <DropdownMenuItem>
             <Link href="/admin">Admin Panel</Link>
