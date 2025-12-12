@@ -35,7 +35,7 @@ function PackageDetail() {
 
   useEffect(() => {
     // use find for clarity
-    const found = TOURS.find((p) => p.__id === packageId) ?? null;
+    const found = TOURS.find((p) => p.__id === packageId?.toString()) ?? null;
     setPackage(found as TourPackage);
   }, [packageId]);
 
