@@ -40,11 +40,11 @@ function BookingCard({ props }: { props: Props }) {
 
   // change package price
   useEffect(() => {
-    setInput({
-      ...input,
-      PackagePrice: input.people * props.PackagePrice,
-    });
-  }, [input.PackageDays, input.people, input, input.PackagePrice]);
+    setInput((prev) => ({
+      ...prev,
+      PackagePrice: prev.people * props.PackagePrice,
+    }));
+  }, [props.PackagePrice]);
   const { bookTour } = useBookingHook();
 
   // handle booking controller

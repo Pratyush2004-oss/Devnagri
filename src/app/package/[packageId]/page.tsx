@@ -3,7 +3,7 @@
 import { Star } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 // carousel removed - using animated grid instead
 import BookingCard from "@/components/shared/BookingCard";
 import { TourCard } from "@/components/shared/ToursCard";
@@ -35,9 +35,41 @@ function PackageDetail() {
 
   useEffect(() => {
     // use find for clarity
-    const found = TOURS.find((p) => p.__id === packageId?.toString()) ?? null;
-    setPackage(found as TourPackage);
-  }, [packageId]);
+    const id =
+      typeof packageId === "string" ? packageId : String(packageId || "");
+    const found = TOURS.find((p) => p.__id === id) ?? null;
+    // Only update if the package ID has actually changed
+    if (found?.__id !== Package?.__id) {
+      setPackage(found as TourPackage);
+    }
+  }, [packageId, Package?.__id]);
+
+  // Memoize computed values to prevent infinite renders
+  const computedDays = useMemo(() => {
+    if (!Package) return 0;
+    return typeof Package.days === "number"
+      ? Package.days
+      : parseInt(String(Package.days).replace(/[^0-9]/g, "")) || 0;
+  }, [Package]);
+
+  const computedPrice = useMemo(() => {
+    if (!Package) return 0;
+    const p = Package.price;
+    if (typeof p === "object" && p !== null && "standard_plan" in p) {
+      const standard = (p as { standard_plan?: number | string }).standard_plan;
+      return Number(String(standard ?? 0).replace(/[^0-9]/g, "")) || 0;
+    }
+    return Number(String(p).replace(/[^0-9]/g, "")) || 0;
+  }, [Package]);
+
+  const bookingProps = useMemo(
+    () => ({
+      PackageName: Package?.name || "",
+      PackageDays: computedDays,
+      PackagePrice: computedPrice,
+    }),
+    [Package, computedDays, computedPrice]
+  );
 
   return (
     Package && (
@@ -371,38 +403,8 @@ function PackageDetail() {
               {/* Booking Section */}
             </div>
             <div className="md:w-2/5 md:mt-10">
-              {/* compute numeric values for booking */}
-              {(() => {
-                const days =
-                  typeof Package.days === "number"
-                    ? Package.days
-                    : parseInt(String(Package.days).replace(/[^0-9]/g, "")) ||
-                      0;
-                const price = (() => {
-                  const p = Package.price;
-                  if (
-                    typeof p === "object" &&
-                    p !== null &&
-                    "standard_plan" in p
-                  ) {
-                    const standard = (p as { standard_plan?: number | string })
-                      .standard_plan;
-                    return (
-                      Number(String(standard ?? 0).replace(/[^0-9]/g, "")) || 0
-                    );
-                  }
-                  return Number(String(p).replace(/[^0-9]/g, "")) || 0;
-                })();
-                return (
-                  <BookingCard
-                    props={{
-                      PackageName: Package.name,
-                      PackageDays: days,
-                      PackagePrice: price,
-                    }}
-                  />
-                );
-              })()}
+              {/* Booking card with memoized props */}
+              <BookingCard props={bookingProps} />
             </div>
           </div>
 
