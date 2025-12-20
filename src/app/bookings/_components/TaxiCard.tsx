@@ -94,21 +94,21 @@ const TaxiBookingCard = ({ pack }: { pack: TaxiBookingsTypes }) => {
       doc.setFont("helvetica", "bold");
       doc.text("Driver Name:", margin, yPosition);
       doc.setFont("helvetica", "normal");
-      doc.text(pack.taxi.driverName ?? "N/A", margin + 50, yPosition);
+      doc.text(pack.taxi.driver ?? "N/A", margin + 50, yPosition);
       yPosition += 10;
 
       // Driver Phone
       doc.setFont("helvetica", "bold");
       doc.text("Driver Contact:", margin, yPosition);
       doc.setFont("helvetica", "normal");
-      doc.text(pack.taxi.driverPhone ?? "N/A", margin + 50, yPosition);
+      doc.text(pack.taxi.driverPhoneNumber ?? "N/A", margin + 50, yPosition);
       yPosition += 10;
 
       // Car Type
       doc.setFont("helvetica", "bold");
       doc.text("Car Type:", margin, yPosition);
       doc.setFont("helvetica", "normal");
-      doc.text(pack.taxi.carType ?? "N/A", margin + 50, yPosition);
+      doc.text(pack.taxi.model ?? "N/A", margin + 50, yPosition);
       yPosition += 10;
 
       // Seats
