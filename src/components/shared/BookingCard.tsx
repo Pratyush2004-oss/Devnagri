@@ -44,7 +44,7 @@ function BookingCard({ props }: { props: Props }) {
       ...prev,
       PackagePrice: prev.people * props.PackagePrice,
     }));
-  }, [props.PackagePrice]);
+  }, [input.people]);
   const { bookTour } = useBookingHook();
 
   // handle booking controller
@@ -103,45 +103,15 @@ function BookingCard({ props }: { props: Props }) {
               </Button>
             </div>
           </div>
-
           {/* Days */}
           <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-6 items-center">
             <Label className="text-xl font-bold sm:justify-center ">Days</Label>
             <div className="flex items-center gap-5 justify-center">
-              <Button
-                disabled={input.PackageDays <= props.PackageDays}
-                size={"icon"}
-                variant={"ghost"}
-                className="cursor-pointer"
-                onClick={() => {
-                  if (input.PackageDays <= 1) return;
-                  // setInput({
-                  //   ...input,
-                  //   PackageDays: input.PackageDays - 1,
-                  // });
-                }}
-              >
-                <MinusCircle className="size-5" strokeWidth={2} />
-              </Button>
               <span className="text-lg lg:text-xl font-bold border px-3.5 py-1 rounded-lg">
-                {input.PackageDays}
+                {props.PackageDays}
               </span>
-              <Button
-                size={"icon"}
-                variant={"ghost"}
-                className="cursor-pointer"
-                onClick={() => {
-                  // setInput({
-                  //   ...input,
-                  //   PackageDays: input.PackageDays + 1,
-                  // });
-                }}
-              >
-                <PlusCircle className="size-5" strokeWidth={2} />
-              </Button>
             </div>
           </div>
-
           {/* Date Picker */}
           <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-6">
             <Label className="text-xl font-bold sm:justify-center">
@@ -186,7 +156,6 @@ function BookingCard({ props }: { props: Props }) {
               </PopoverContent>
             </Popover>
           </div>
-
           {/* Price */}
           <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-6">
             <Label className="text-xl font-bold sm:justify-center">
