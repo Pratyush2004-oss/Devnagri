@@ -6,6 +6,7 @@ const loadImageAsBase64 = async (imagePath: string): Promise<string> => {
   try {
     // Create absolute URL
     const absoluteUrl = `${window.location.origin}${imagePath}`;
+    console.log("Attempting to load image from:", absoluteUrl);
 
     const response = await fetch(absoluteUrl);
 
@@ -16,7 +17,10 @@ const loadImageAsBase64 = async (imagePath: string): Promise<string> => {
     const blob = await response.blob();
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result as string);
+      reader.onloadend = () => {
+        console.log("Image successfully loaded as base64");
+        resolve(reader.result as string);
+      };
       reader.onerror = (error) => {
         console.error("FileReader error:", error);
         reject(error);
@@ -25,6 +29,9 @@ const loadImageAsBase64 = async (imagePath: string): Promise<string> => {
     });
   } catch (error) {
     console.error("Error loading image:", error);
+    console.warn(
+      "Logo will not be displayed in PDF. Please ensure the image exists at the specified path."
+    );
     return "";
   }
 };
@@ -38,19 +45,19 @@ export const downloadTourPDF = async (pack: BookingType) => {
   const margin = 20;
   let yPosition = 15;
 
-  // Load and add logo
+  // Add background color for header
+  doc.setFillColor(41, 128, 185);
+  doc.rect(0, 0, pageWidth, 50, "F");
+
+  // Load and add logo (after header so it's on top)
   try {
     const logoBase64 = await loadImageAsBase64("/devnagri.png");
     if (logoBase64) {
       doc.addImage(logoBase64, "PNG", margin, 8, 25, 25);
     }
   } catch (error) {
-    console.error("Failed to load logo:", error);
+    console.error("Failed to add logo to PDF:", error);
   }
-
-  // Add background color for header
-  doc.setFillColor(41, 128, 185);
-  doc.rect(0, 0, pageWidth, 50, "F");
 
   // Add company logo area and name
   doc.setTextColor(255, 255, 255);
@@ -212,19 +219,19 @@ export const downloadTaxiPDF = async (pack: TaxiBookingsTypes) => {
   const margin = 20;
   let yPosition = 15;
 
-  // Load and add logo
+  // Add background color for header
+  doc.setFillColor(41, 128, 185);
+  doc.rect(0, 0, pageWidth, 50, "F");
+
+  // Load and add logo (after header so it's on top)
   try {
     const logoBase64 = await loadImageAsBase64("/devnagri.png");
     if (logoBase64) {
       doc.addImage(logoBase64, "PNG", margin, 8, 25, 25);
     }
   } catch (error) {
-    console.error("Failed to load logo:", error);
+    console.error("Failed to add logo to PDF:", error);
   }
-
-  // Add background color for header
-  doc.setFillColor(41, 128, 185);
-  doc.rect(0, 0, pageWidth, 50, "F");
 
   // Add company logo area and name
   doc.setTextColor(255, 255, 255);
