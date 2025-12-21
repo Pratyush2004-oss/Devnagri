@@ -50,6 +50,7 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.9",
+    "fs": "^0.0.1-security",
     "input-otp": "^1.4.2",
     "jspdf": "^3.0.4",
     "lucide-react": "^0.525.0",

@@ -15,8 +15,4 @@ export const NavData = [
     title: "Taxi Services",
     url: "/taxi-services",
   },
-  {
-    title: "Shop",
-    url: "/shop",
-  },
 ];

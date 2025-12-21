@@ -21,7 +21,7 @@ export function UserAvatar({ User }: { User: User | null }) {
             <Avatar className="border-2 border-gray-500">
               <AvatarImage src="/devnagri.png" />
               <AvatarFallback>
-                {User.name[0] + User.name.split(" ")[1][0]}
+                {User.name[0] + User.name.split(" ")[1]?.[0]}
               </AvatarFallback>
             </Avatar>
             <div className="space-y-1">

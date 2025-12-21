@@ -67,6 +67,7 @@ function PackageDetail() {
       PackageName: Package?.name || "",
       PackageDays: computedDays,
       PackagePrice: computedPrice,
+      PlaceList: Package?.places
     }),
     [Package, computedDays, computedPrice]
   );

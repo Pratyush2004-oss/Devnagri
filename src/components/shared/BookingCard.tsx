@@ -20,7 +20,6 @@ interface Props {
   PackageDays: number;
   PackagePrice: number;
   PlaceList?: string[];
-  AdventureList?: string[];
 }
 
 function BookingCard({ props }: { props: Props }) {
@@ -32,7 +31,6 @@ function BookingCard({ props }: { props: Props }) {
     people: 2,
     startDate: new Date(),
     PlaceList: props.PlaceList,
-    AdventureList: props.AdventureList,
   });
   const [loading, setloading] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);

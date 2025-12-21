@@ -34,7 +34,7 @@ const useBookingHook = () => {
           price: input.PackagePrice,
           people: input.people,
           days: input.PackageDays,
-          placeList: input.PlaceList,
+          placeList: input.PlaceList?.join(", ")
         } as any)
         .returning();
 
@@ -104,6 +104,7 @@ const useBookingHook = () => {
         .fullJoin(Users, eq(Users.id, Bookings.user))
         .where(eq(Bookings.user, user.id))
         .orderBy(desc(Bookings.id));
+
       return fetchedBookings;
     } catch (error) {
       return { error: "Something went wrong" };
